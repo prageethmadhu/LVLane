@@ -45,19 +45,11 @@ def load_network(net, model_dir, finetune_from=None, logger=None):
         load_network_specified(net, finetune_from, logger)
         return
     pretrained_model = torch.load(model_dir, map_location=torch.device('cpu'))
-    pretrained_state_dict = pretrained_model['net']
-    new_state_dict = {}
+    # pretrained_state_dict = pretrained_model['net']
+    # new_state_dict = {}
 
-    for key, value in pretrained_state_dict.items():
-        if "heads.det" in key:
-            new_key = key.replace("heads.det", "heads.cls")
-            new_state_dict[new_key] = value
-        elif "heads.category" in key:
-            # Map other keys if needed
-            continue
-        else:
-            new_state_dict[key] = value
 
-    net.load_state_dict(new_state_dict, strict=True)
+    net.load_state_dict(pretrained_model['net'], strict=True)
+
 
    # net.load_state_dict(pretrained_model['net'], strict=True)
