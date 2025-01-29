@@ -1,62 +1,68 @@
-/* Copyright (c) 2018, Grégoire Payen de La Garanderie, Durham University
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * * Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
- *
- * * Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
- *   and/or other materials provided with the distribution.
- *
- * * Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from
- *   this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+#undef HAVE_SNPRINTF
 #include <torch/extension.h>
 #include <torch/types.h>
-#include <iostream>
+#include <vector>
+#include <algorithm>
 
-std::vector<at::Tensor> nms_cuda_forward(
+// Helper function to calculate IoU
+float iou(const at::Tensor &box1, const at::Tensor &box2) {
+    float x1 = std::max(box1[0].item<float>(), box2[0].item<float>());
+    float y1 = std::max(box1[1].item<float>(), box2[1].item<float>());
+    float x2 = std::min(box1[2].item<float>(), box2[2].item<float>());
+    float y2 = std::min(box1[3].item<float>(), box2[3].item<float>());
+
+    float intersection = std::max(0.0f, x2 - x1 + 1) * std::max(0.0f, y2 - y1 + 1);
+    float box1_area = (box1[2].item<float>() - box1[0].item<float>() + 1) *
+                      (box1[3].item<float>() - box1[1].item<float>() + 1);
+    float box2_area = (box2[2].item<float>() - box2[0].item<float>() + 1) *
+                      (box2[3].item<float>() - box2[1].item<float>() + 1);
+
+    return intersection / (box1_area + box2_area - intersection);
+}
+
+// CPU-based NMS implementation
+std::vector<at::Tensor> nms_cpu_forward(
         at::Tensor boxes,
-        at::Tensor idx,
+        at::Tensor scores,
         float nms_overlap_thresh,
-        unsigned long top_k);
+        unsigned long top_k) {
+    boxes = boxes.contiguous();
+    scores = scores.contiguous();
 
-#define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
-#define CHECK_CONTIGUOUS(x) AT_ASSERTM(x.is_contiguous(), #x " must be contiguous")
-#define CHECK_INPUT(x) CHECK_CUDA(x); CHECK_CONTIGUOUS(x)
+    auto indices = std::get<1>(scores.sort(0, true)); // Sort scores in descending order
+    at::Tensor selected_indices = at::empty({0}, at::kLong);
+    std::vector<bool> suppressed(boxes.size(0), false);
 
+    for (int i = 0; i < indices.size(0); ++i) {
+        if (suppressed[i]) continue;
+
+        int64_t idx = indices[i].item<int64_t>();
+        selected_indices = at::cat({selected_indices, at::tensor({idx}, at::kLong)});
+
+        if (selected_indices.size(0) >= top_k) break;
+
+        for (int j = i + 1; j < indices.size(0); ++j) {
+            if (suppressed[j]) continue;
+
+            float overlap = iou(boxes[idx], boxes[indices[j].item<int64_t>()]);
+            if (overlap > nms_overlap_thresh) {
+                suppressed[j] = true;
+            }
+        }
+    }
+
+    return {selected_indices};
+}
+
+// Wrapper function
 std::vector<at::Tensor> nms_forward(
         at::Tensor boxes,
         at::Tensor scores,
         float thresh,
         unsigned long top_k) {
-
-
-    auto idx = std::get<1>(scores.sort(0,true));
-
-    CHECK_INPUT(boxes);
-    CHECK_INPUT(idx);
-
-    return nms_cuda_forward(boxes, idx, thresh, top_k);
+    return nms_cpu_forward(boxes, scores, thresh, top_k);
 }
 
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
-    m.def("nms_forward", &nms_forward, "NMS");
+    m.def("nms_forward", &nms_forward, "NMS (CPU)");
 }
-

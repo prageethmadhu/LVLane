@@ -140,7 +140,7 @@ class TransConvEncoderModule(nn.Module):
         self.pos_embeds = []
         if pos_shape is not None:
             for dim in attn_out_dims:
-                pos_embed = build_position_encoding(dim, pos_shape).cuda()
+                pos_embed = build_position_encoding(dim, pos_shape).to(device)
                 self.pos_embeds.append(pos_embed)
     
     def forward(self, src):

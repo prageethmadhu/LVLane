@@ -12,6 +12,7 @@ from lanedet.utils.visualization import imshow_lanes
 from lanedet.utils.net_utils import load_network
 from pathlib import Path
 from tqdm import tqdm
+device = torch.device('cpu')
 import torch.nn.functional as F
 
 class Detect(object):
@@ -21,7 +22,7 @@ class Detect(object):
         self.net = build_net(self.cfg)
         #print(self.net)
         self.net = torch.nn.parallel.DataParallel(
-                self.net, device_ids = range(1)).cuda()
+        self.net, device_ids = range(1)).to(device)
         total_params = sum(param.numel() for param in self.net.parameters())
         print(f"total number of params: {total_params}")
         self.net.eval()

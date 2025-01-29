@@ -26,7 +26,7 @@ def save_model(net, optim, scheduler, recorder, is_best=False):
 
 
 def load_network_specified(net, model_dir, logger=None):
-    pretrained_net = torch.load(model_dir)['net']
+    pretrained_net = torch.load(model_dir, map_location=torch.device('cpu'))['net']
     net_state = net.state_dict()
     state = {}
     for k, v in pretrained_net.items():
@@ -44,5 +44,20 @@ def load_network(net, model_dir, finetune_from=None, logger=None):
             logger.info('Finetune model from: ' + finetune_from)
         load_network_specified(net, finetune_from, logger)
         return
-    pretrained_model = torch.load(model_dir)
-    net.load_state_dict(pretrained_model['net'], strict=True)
+    pretrained_model = torch.load(model_dir, map_location=torch.device('cpu'))
+    pretrained_state_dict = pretrained_model['net']
+    new_state_dict = {}
+
+    for key, value in pretrained_state_dict.items():
+        if "heads.det" in key:
+            new_key = key.replace("heads.det", "heads.cls")
+            new_state_dict[new_key] = value
+        elif "heads.category" in key:
+            # Map other keys if needed
+            continue
+        else:
+            new_state_dict[key] = value
+
+    net.load_state_dict(new_state_dict, strict=True)
+
+   # net.load_state_dict(pretrained_model['net'], strict=True)
