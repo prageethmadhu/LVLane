@@ -18,6 +18,7 @@ from tqdm import tqdm
 from lanedet.core.lane import Lane
 device = torch.device('cpu')  # Use 'cuda' if you have a GPU
 import matplotlib.pyplot as plt
+import logging
 
 class VideoLaneDetection:
     def __init__(self, cfg):
@@ -44,32 +45,46 @@ class VideoLaneDetection:
             data = self.net.module.get_lanes(data)
         return data
 
-
-
-
     def inference(self, data):
         """Run inference on the preprocessed frame."""
         with torch.no_grad():
             data = self.net(data)
             data = self.net.module.get_lanes(data)
         return data
-
+            
     def visualize(self, data, out_file=None):
-        # Draw the lanes on the image
-        for lane in data['lanes']:
-            # Ensure the lane is iterable and contains coordinate pairs
-            if isinstance(lane, np.ndarray) and len(lane.shape) == 2 and lane.shape[1] == 2:
-                for x, y in lane:
-                    if x <= 0 or y <= 0:
-                        continue
-                    x, y = int(x), int(y)
-                    cv2.circle(data['ori_img'], (x, y), 4, (0, 255, 0), 2)
-            else:
-                print(f"Unexpected lane format: {lane}")
+        logging.debug("Visualizing detected lanes")
+        try:
+            for lane in data.get('lanes', []):
+                # Check if each lane is a Lane object and extract points
+                if isinstance(lane, Lane):
+                    points = lane.points  # Extract points from the Lane object
+                elif isinstance(lane, list):  # Handle lists of Lane objects
+                    points = [l.points for l in lane if isinstance(l, Lane)]
+                    points = np.vstack(points) if points else None  # Combine all points into one array
+                else:
+                    points = None  # Skip if the lane format is not recognized
 
-        # Save or display the output
-        if out_file:
-            cv2.imwrite(out_file, data['ori_img'])
+                # Proceed if points were successfully extracted
+                if points is not None and isinstance(points, np.ndarray) and len(points.shape) == 2:
+                    for x, y in points:
+                        if x > 0 and y > 0:  # Ensure coordinates are valid
+                            # Scale normalized coordinates to the original image dimensions
+                            x = int(x * data['ori_img'].shape[1])
+                            y = int(y * data['ori_img'].shape[0])
+                            cv2.circle(data['ori_img'], (x, y), 4, (0, 255, 0), 2)
+                else:
+                    logging.warning(f"Unexpected lane format or empty points: {lane}")
+
+            # Save the output image if specified
+            if out_file:
+                cv2.imwrite(out_file, data['ori_img'])
+                logging.info(f"Saved visualization to {out_file}")
+        except Exception as e:
+            logging.error(f"Error during visualization: {e}")
+
+
+
 
     def process_video(self, input_path, output_path=None):
         cap = cv2.VideoCapture(input_path)
