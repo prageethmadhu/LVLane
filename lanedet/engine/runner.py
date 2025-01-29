@@ -5,7 +5,7 @@ import pytorch_warmup as warmup
 import numpy as np
 import random
 import cv2
-
+device = torch.device('cpu')
 from lanedet.models.registry import build_net
 from .registry import build_trainer, build_evaluator
 from .optimizer import build_optimizer
@@ -26,9 +26,9 @@ class Runner(object):
         self.net = build_net(self.cfg)
         # self.net.to(torch.device('cuda'))
         # self.net = torch.nn.parallel.DataParallel(
-        #         self.net, device_ids = range(self.cfg.gpus)).cuda()
+        #         self.net, device_ids = range(self.cfg.gpus)).to(device)
         self.net = MMDataParallel(
-                self.net, device_ids = range(self.cfg.gpus)).cuda()
+                self.net, device_ids = range(self.cfg.gpus)).to(device)
         self.recorder.logger.info('Network: \n' + str(self.net))
         self.resume()
         self.optimizer = build_optimizer(self.cfg, self.net)
@@ -51,7 +51,7 @@ class Runner(object):
         for k in batch:
             if not isinstance(k, torch.Tensor):
                 continue
-            batch[k] = batch[k].cuda()
+            batch[k] = batch[k].to(device)
         return batch
     
     def train_epoch(self, epoch, train_loader):

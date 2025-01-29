@@ -12,6 +12,7 @@ from lanedet.utils.visualization import imshow_lanes
 from lanedet.utils.net_utils import load_network
 from pathlib import Path
 from tqdm import tqdm
+device = torch.device('cpu')
 
 class Detect(object):
     def __init__(self, cfg):
@@ -19,7 +20,7 @@ class Detect(object):
         self.processes = Process(cfg.val_process, cfg)
         self.net = build_net(self.cfg)
         self.net = torch.nn.parallel.DataParallel(
-                self.net, device_ids = range(1)).cuda()
+                self.net, device_ids = range(1)).to(device)
         self.net.eval()
         load_network(self.net, self.cfg.load_from)
 

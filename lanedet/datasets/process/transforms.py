@@ -7,7 +7,7 @@ import collections
 from PIL import Image
 
 from ..registry import PROCESS
-
+device = torch.device('cpu')
 def to_tensor(data):
     """Convert objects of various python types to :obj:`torch.Tensor`.
 

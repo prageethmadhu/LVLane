@@ -9,6 +9,7 @@ from torchvision.models import resnet18, resnet34
 from lanedet.ops import nms
 from lanedet.core.lane import Lane
 from lanedet.models.losses.focal_loss import FocalLoss
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # from .matching import match_proposals_with_targets
 from ..registry import HEADS
@@ -50,7 +51,7 @@ class LaneATT(nn.Module):
 
         # Filter masks if `anchors_freq_path` is provided
         if anchors_freq_path is not None:
-            anchors_mask = torch.load(anchors_freq_path).cpu()
+            anchors_mask = torch.load(anchors_freq_path, map_location=torch.device('cpu')).cpu()
             assert topk_anchors is not None
             ind = torch.argsort(anchors_mask, descending=True)[:topk_anchors]
             self.anchors = self.anchors[ind]
@@ -72,12 +73,12 @@ class LaneATT(nn.Module):
 
         #self.inited = False
 
-        self.anchors = self.anchors.cuda()
-        self.anchor_ys = self.anchor_ys.cuda()
-        self.cut_zs = self.cut_zs.cuda()
-        self.cut_ys = self.cut_ys.cuda()
-        self.cut_xs = self.cut_xs.cuda()
-        self.invalid_mask = self.invalid_mask.cuda()
+        self.anchors = self.anchors.to(device)
+        self.anchor_ys = self.anchor_ys.to(device)
+        self.cut_zs = self.cut_zs.to(device)
+        self.cut_ys = self.cut_ys.to(device)
+        self.cut_xs = self.cut_xs.to(device)
+        self.invalid_mask = self.invalid_mask.to(device)
 
     def forward(self, x, **kwargs):
         param = self.cfg.train_parameters if self.training else self.cfg.test_parameters

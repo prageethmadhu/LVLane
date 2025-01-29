@@ -96,27 +96,21 @@ class Config:
     def _file2dict(filename):
         filename = osp.abspath(osp.expanduser(filename))
         check_file_exist(filename)
+
         if filename.endswith('.py'):
-            with tempfile.TemporaryDirectory() as temp_config_dir:
-                temp_config_file = tempfile.NamedTemporaryFile(
-                    dir=temp_config_dir, suffix='.py')
-                temp_config_name = osp.basename(temp_config_file.name)
-                shutil.copyfile(filename,
-                                osp.join(temp_config_dir, temp_config_name))
-                temp_module_name = osp.splitext(temp_config_name)[0]
-                sys.path.insert(0, temp_config_dir)
-                Config._validate_py_syntax(filename)
-                mod = import_module(temp_module_name)
-                sys.path.pop(0)
-                cfg_dict = {
-                    name: value
-                    for name, value in mod.__dict__.items()
-                    if not name.startswith('__')
-                }
-                # delete imported module
-                del sys.modules[temp_module_name]
-                # close temp file
-                temp_config_file.close()
+            import importlib.util
+            Config._validate_py_syntax(filename)
+
+            # Load the Python config file dynamically
+            spec = importlib.util.spec_from_file_location("module.name", filename)
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+
+            cfg_dict = {
+                name: value for name, value in mod.__dict__.items()
+                if not name.startswith('__')
+            }
+
         elif filename.endswith(('.yml', '.yaml', '.json')):
             import mmcv
             cfg_dict = mmcv.load(filename)
@@ -127,14 +121,14 @@ class Config:
         with open(filename, 'r') as f:
             cfg_text += f.read()
 
+        # Handle hierarchical _base_ configurations
         if BASE_KEY in cfg_dict:
             cfg_dir = osp.dirname(filename)
             base_filename = cfg_dict.pop(BASE_KEY)
-            base_filename = base_filename if isinstance(
-                base_filename, list) else [base_filename]
+            base_filename = base_filename if isinstance(base_filename, list) else [base_filename]
 
-            cfg_dict_list = list()
-            cfg_text_list = list()
+            cfg_dict_list = []
+            cfg_text_list = []
             for f in base_filename:
                 _cfg_dict, _cfg_text = Config._file2dict(osp.join(cfg_dir, f))
                 cfg_dict_list.append(_cfg_dict)
@@ -146,10 +140,9 @@ class Config:
                     raise KeyError('Duplicate key is not allowed among bases')
                 base_cfg_dict.update(c)
 
-            base_cfg_dict = Config._merge_a_into_b(cfg_dict, base_cfg_dict)
-            cfg_dict = base_cfg_dict
+            cfg_dict = Config._merge_a_into_b(cfg_dict, base_cfg_dict)
 
-            # merge cfg_text
+            # Merge cfg_text
             cfg_text_list.append(cfg_text)
             cfg_text = '\n'.join(cfg_text_list)
 
