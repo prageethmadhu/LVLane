@@ -4,7 +4,7 @@ import cv2
 import os
 import argparse
 
-TRAIN_SET = ['label_data_0313.json', 'label_data_0601.json']
+TRAIN_SET = ['label_data_0313.json']
 VAL_SET = ['label_data_0531.json']
 
 # create mask labels and class labels

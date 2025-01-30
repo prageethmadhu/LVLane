@@ -5,7 +5,7 @@ import datetime
 from .logger import init_logger
 import logging
 import pathspec
-
+import shutil
 
 class SmoothedValue(object):
     """Track a series of values and provide access to smoothed values over a
@@ -78,7 +78,9 @@ class Recorder(object):
            dirs = os.path.join(to_path,'code',os.path.split(f[2:])[0])
            if not os.path.exists(dirs):
                os.makedirs(dirs)
-           os.system('cp %s %s'%(f,os.path.join(to_path,'code',f[2:])))
+           #os.system('cp %s %s'%(f,os.path.join(to_path,'code',f[2:])))
+           os.system('copy "%s" "%s"' % (f, os.path.join(to_path, 'code', f[2:])))
+           
 
     def get_work_dir(self):
         now = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')

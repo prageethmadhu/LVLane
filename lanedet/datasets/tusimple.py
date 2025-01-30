@@ -18,7 +18,7 @@ from sklearn.metrics import confusion_matrix
 
 SPLIT_FILES = {    
 
-    'trainval': ['label_data_0313.json', 'label_data_0601.json', 'label_data_0531.json'],
+    'trainval': ['label_data_0313.json'],
     'val': ['test_label.json'],
     'test': ['test_label.json']
 }
@@ -47,7 +47,8 @@ class TuSimple(BaseDataset):
                 data = json.loads(line)
                 y_samples = data['h_samples']
                 gt_lanes = data['lanes']
-                category = data['categories']
+              #  category = data['categories']
+                category = data.get('categories', [1,2,3,4,5,6])  # Default to empty list
                 category = list(map(df.get,category))
 
                 mask_path = data['raw_file'].replace('clips', 'seg_label')[:-3] + 'png'

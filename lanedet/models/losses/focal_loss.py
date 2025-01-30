@@ -22,7 +22,7 @@ class SoftmaxFocalLoss(nn.Module):
         log_score = factor * log_score
         #print(f"log score shape: {log_score.shape}")
         #print("-------------")
-        loss = self.nll(log_score, labels)
+        loss = self.nll(log_score, labels.long())
         return loss
 
 def one_hot(labels: torch.Tensor,
