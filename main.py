@@ -40,14 +40,14 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
     parser.add_argument('config', help='train config file path')
     parser.add_argument(
-        '--work_dirs', type=str, default='work_dirs',
+        '--work_dirs', type=str, default='data',
         help='work dirs')
     parser.add_argument(
         '--load_from', default=None,
-        help='the checkpoint file to resume from')
+        help='best-ts-lv2.pth')
     parser.add_argument(
-        '--finetune_from', default=None,
-        help='whether to finetune from the checkpoint')
+        '--finetune_from', default="best-ts-lv2.pth",
+        help='best-ts-lv2.pth')
     parser.add_argument(
         '--view', action='store_true', 
         help='whether to view')
