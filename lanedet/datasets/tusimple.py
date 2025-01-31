@@ -47,8 +47,8 @@ class TuSimple(BaseDataset):
                 data = json.loads(line)
                 y_samples = data['h_samples']
                 gt_lanes = data['lanes']
-              #  category = data['categories']
-                category = data.get('categories', [1,2,3,4,5,6])  # Default to empty list
+                category = data['categories']
+              #  category = data.get('categories', [1,1,0,0,0,0])  # Default to empty list
                 category = list(map(df.get,category))
 
                 mask_path = data['raw_file'].replace('clips', 'seg_label')[:-3] + 'png'

@@ -81,7 +81,7 @@ def gen_label_from_json(data_root, data_savedir, file_name):
                 seg_path, img_name = os.path.join(data_root, data_savedir, seg_path[1]), seg_path[2]
                 os.makedirs(seg_path, exist_ok=True)
                 seg_path = os.path.join(seg_path, img_name[:-3]+"png")
-                cv2.imwrite(seg_path, seg_img)
+                #cv2.imwrite(seg_path, seg_img)
 
                 cls = [c[1] for c in data]
                 non_zero_ind = [i for i, e in enumerate(list_str) if e != 0]
@@ -105,8 +105,8 @@ def generate_label(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--root', required=True, help='The root of the Tusimple dataset')
-    parser.add_argument('--savedir', type=str, default='seg_label', help='The root of the Tusimple dataset')
-    parser.add_argument('--filename', type=str, default='LVLane_test_sunny', help= 'Name of the json file')
+    parser.add_argument('--savedir', type=str, default='seg_label_01', help='The root of the Tusimple dataset')
+    parser.add_argument('--filename', type=str, default='label_data_0313', help= 'Name of the json file')
     args = parser.parse_args()
 
     generate_label(args)
