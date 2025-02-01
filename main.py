@@ -46,7 +46,7 @@ def parse_args():
         '--load_from', default=None,
         help='best-ts-lv2.pth')
     parser.add_argument(
-        '--finetune_from', default="best-ts-lv2.pth",
+        '--finetune_from', default=None,
         help='best-ts-lv2.pth')
     parser.add_argument(
         '--view', action='store_true', 

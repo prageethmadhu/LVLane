@@ -18,7 +18,7 @@ from sklearn.metrics import confusion_matrix
 
 SPLIT_FILES = {    
 
-    'trainval': ['label_data_0313.json'],
+    'trainval': ['LVLane_train_sunny.json'],
     'val': ['test_label.json'],
     'test': ['test_label.json']
 }

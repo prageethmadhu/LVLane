@@ -1,0 +1,657 @@
+{
+    "keyframe_0030.jpg102333": {
+        "filename": "keyframe_0030.jpg",
+        "size": 102333,
+        "regions": [
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        135,
+                        295,
+                        388,
+                        480,
+                        522,
+                        545
+                    ],
+                    "all_points_y": [
+                        713,
+                        610,
+                        549,
+                        490,
+                        463,
+                        444
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        670,
+                        646,
+                        612,
+                        581,
+                        565,
+                        556
+                    ],
+                    "all_points_y": [
+                        564,
+                        540,
+                        502,
+                        473,
+                        458,
+                        444
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "dashed"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        1207,
+                        1003,
+                        863,
+                        736,
+                        661,
+                        591,
+                        572
+                    ],
+                    "all_points_y": [
+                        672,
+                        603,
+                        556,
+                        513,
+                        489,
+                        460,
+                        448
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            }
+        ],
+        "file_attributes": {}
+    },
+    "keyframe_0060.jpg104688": {
+        "filename": "keyframe_0060.jpg",
+        "size": 104688,
+        "regions": [
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        106,
+                        268,
+                        362,
+                        462,
+                        486,
+                        512,
+                        529
+                    ],
+                    "all_points_y": [
+                        713,
+                        622,
+                        562,
+                        498,
+                        482,
+                        468,
+                        454
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        764,
+                        721,
+                        670,
+                        614,
+                        594,
+                        572,
+                        559,
+                        558
+                    ],
+                    "all_points_y": [
+                        689,
+                        638,
+                        582,
+                        516,
+                        494,
+                        471,
+                        455,
+                        452
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "dashed"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        1233,
+                        1131,
+                        1017,
+                        889,
+                        724,
+                        624,
+                        592
+                    ],
+                    "all_points_y": [
+                        676,
+                        640,
+                        599,
+                        556,
+                        505,
+                        475,
+                        464
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            }
+        ],
+        "file_attributes": {}
+    },
+    "keyframe_0090.jpg98011": {
+        "filename": "keyframe_0090.jpg",
+        "size": 98011,
+        "regions": [
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        75,
+                        220,
+                        378,
+                        455,
+                        518,
+                        537
+                    ],
+                    "all_points_y": [
+                        714,
+                        635,
+                        549,
+                        502,
+                        462,
+                        452
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        745,
+                        650,
+                        622,
+                        598,
+                        572,
+                        565
+                    ],
+                    "all_points_y": [
+                        689,
+                        569,
+                        532,
+                        498,
+                        474,
+                        459
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "dashed"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        1194,
+                        1122,
+                        991,
+                        894,
+                        796,
+                        698,
+                        645,
+                        607
+                    ],
+                    "all_points_y": [
+                        682,
+                        660,
+                        613,
+                        576,
+                        533,
+                        496,
+                        476,
+                        462
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            }
+        ],
+        "file_attributes": {}
+    },
+    "keyframe_0120.jpg101037": {
+        "filename": "keyframe_0120.jpg",
+        "size": 101037,
+        "regions": [
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        103,
+                        218,
+                        329,
+                        409,
+                        449,
+                        510
+                    ],
+                    "all_points_y": [
+                        716,
+                        651,
+                        586,
+                        533,
+                        513,
+                        470
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        753,
+                        684,
+                        594,
+                        566
+                    ],
+                    "all_points_y": [
+                        684,
+                        598,
+                        497,
+                        462
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "dashed"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        1201,
+                        1114,
+                        993,
+                        869,
+                        784,
+                        699,
+                        644,
+                        602,
+                        580
+                    ],
+                    "all_points_y": [
+                        671,
+                        640,
+                        599,
+                        561,
+                        530,
+                        502,
+                        480,
+                        459,
+                        443
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            }
+        ],
+        "file_attributes": {}
+    },
+    "keyframe_0150.jpg107725": {
+        "filename": "keyframe_0150.jpg",
+        "size": 107725,
+        "regions": [
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        101,
+                        219,
+                        335,
+                        487,
+                        540
+                    ],
+                    "all_points_y": [
+                        713,
+                        649,
+                        580,
+                        481,
+                        443
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        721,
+                        683,
+                        672,
+                        641,
+                        612,
+                        608,
+                        587,
+                        570,
+                        567
+                    ],
+                    "all_points_y": [
+                        695,
+                        604,
+                        582,
+                        543,
+                        513,
+                        498,
+                        481,
+                        458,
+                        452
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "dashed"
+                }
+            },
+            {
+                "shape_attributes": {
+                    "name": "polyline",
+                    "all_points_x": [
+                        1230,
+                        1082,
+                        944,
+                        785,
+                        694,
+                        613
+                    ],
+                    "all_points_y": [
+                        687,
+                        634,
+                        583,
+                        523,
+                        487,
+                        458
+                    ]
+                },
+                "region_attributes": {
+                    "classess": "continuous white"
+                }
+            }
+        ],
+        "file_attributes": {}
+    },
+    "keyframe_0180.jpg107997": {
+        "filename": "keyframe_0180.jpg",
+        "size": 107997,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0210.jpg102656": {
+        "filename": "keyframe_0210.jpg",
+        "size": 102656,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0240.jpg110936": {
+        "filename": "keyframe_0240.jpg",
+        "size": 110936,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0270.jpg125555": {
+        "filename": "keyframe_0270.jpg",
+        "size": 125555,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0300.jpg133034": {
+        "filename": "keyframe_0300.jpg",
+        "size": 133034,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0330.jpg109078": {
+        "filename": "keyframe_0330.jpg",
+        "size": 109078,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0360.jpg99024": {
+        "filename": "keyframe_0360.jpg",
+        "size": 99024,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0390.jpg99151": {
+        "filename": "keyframe_0390.jpg",
+        "size": 99151,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0420.jpg104098": {
+        "filename": "keyframe_0420.jpg",
+        "size": 104098,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0450.jpg105857": {
+        "filename": "keyframe_0450.jpg",
+        "size": 105857,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0480.jpg114413": {
+        "filename": "keyframe_0480.jpg",
+        "size": 114413,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0510.jpg122679": {
+        "filename": "keyframe_0510.jpg",
+        "size": 122679,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0540.jpg119731": {
+        "filename": "keyframe_0540.jpg",
+        "size": 119731,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0570.jpg118754": {
+        "filename": "keyframe_0570.jpg",
+        "size": 118754,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0600.jpg119197": {
+        "filename": "keyframe_0600.jpg",
+        "size": 119197,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0630.jpg118653": {
+        "filename": "keyframe_0630.jpg",
+        "size": 118653,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0660.jpg118253": {
+        "filename": "keyframe_0660.jpg",
+        "size": 118253,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0690.jpg123303": {
+        "filename": "keyframe_0690.jpg",
+        "size": 123303,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0720.jpg120250": {
+        "filename": "keyframe_0720.jpg",
+        "size": 120250,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0750.jpg119100": {
+        "filename": "keyframe_0750.jpg",
+        "size": 119100,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0780.jpg110776": {
+        "filename": "keyframe_0780.jpg",
+        "size": 110776,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0810.jpg116459": {
+        "filename": "keyframe_0810.jpg",
+        "size": 116459,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0840.jpg117502": {
+        "filename": "keyframe_0840.jpg",
+        "size": 117502,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0870.jpg123436": {
+        "filename": "keyframe_0870.jpg",
+        "size": 123436,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0900.jpg125574": {
+        "filename": "keyframe_0900.jpg",
+        "size": 125574,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0930.jpg129563": {
+        "filename": "keyframe_0930.jpg",
+        "size": 129563,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0960.jpg133195": {
+        "filename": "keyframe_0960.jpg",
+        "size": 133195,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_0990.jpg137773": {
+        "filename": "keyframe_0990.jpg",
+        "size": 137773,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1020.jpg130248": {
+        "filename": "keyframe_1020.jpg",
+        "size": 130248,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1050.jpg120971": {
+        "filename": "keyframe_1050.jpg",
+        "size": 120971,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1080.jpg125249": {
+        "filename": "keyframe_1080.jpg",
+        "size": 125249,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1110.jpg127902": {
+        "filename": "keyframe_1110.jpg",
+        "size": 127902,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1140.jpg128100": {
+        "filename": "keyframe_1140.jpg",
+        "size": 128100,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1170.jpg143444": {
+        "filename": "keyframe_1170.jpg",
+        "size": 143444,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1200.jpg134597": {
+        "filename": "keyframe_1200.jpg",
+        "size": 134597,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1230.jpg138522": {
+        "filename": "keyframe_1230.jpg",
+        "size": 138522,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1260.jpg130462": {
+        "filename": "keyframe_1260.jpg",
+        "size": 130462,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1290.jpg148231": {
+        "filename": "keyframe_1290.jpg",
+        "size": 148231,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1320.jpg129491": {
+        "filename": "keyframe_1320.jpg",
+        "size": 129491,
+        "regions": [],
+        "file_attributes": {}
+    },
+    "keyframe_1350.jpg100726": {
+        "filename": "keyframe_1350.jpg",
+        "size": 100726,
+        "regions": [],
+        "file_attributes": {}
+    }
+}

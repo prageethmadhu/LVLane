@@ -26,3 +26,5 @@ build
 lane
 debug
 pretrained_models
+my_anno_all
+results
