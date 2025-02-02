@@ -4,7 +4,8 @@ import cv2
 import os
 import argparse
 
-TRAIN_SET = ['LVLane_train_sunny.json']
+#TODO set this when generating seg_lable anotation formatting.['label_data_0313.json', 'label_data_0601.json']
+TRAIN_SET = ['1LVLane_train_sunny.json']
 VAL_SET = ['label_data_0531.json']
 
 # create mask labels and class labels
@@ -105,8 +106,8 @@ def generate_label(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--root', required=True, help='The root of the Tusimple dataset')
-    parser.add_argument('--savedir', type=str, default='seg_label_01', help='The root of the Tusimple dataset')
-    parser.add_argument('--filename', type=str, default='LVLane_train_sunny')
+    parser.add_argument('--savedir', type=str, default='seg_label', help='The root of the Tusimple dataset')
+    parser.add_argument('--filename', type=str, default='LVLane_test_sunny', help= 'Name of the json file')
     args = parser.parse_args()
 
     generate_label(args)

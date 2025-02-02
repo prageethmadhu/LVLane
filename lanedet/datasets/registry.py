@@ -42,6 +42,8 @@ def build_dataloader(split_cfg, cfg, is_train=True):
     data_loader = torch.utils.data.DataLoader(
         dataset, batch_size = cfg.batch_size, shuffle = shuffle,
         num_workers = 0, pin_memory = False, drop_last = False,
+        #TODO
+        #num_workers = cfg.workers, pin_memory = False, drop_last = False,
         collate_fn=partial(collate, samples_per_gpu=samples_per_gpu),
         worker_init_fn=init_fn)
 

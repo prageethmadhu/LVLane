@@ -6,7 +6,7 @@ import torch.nn.functional
 
 
 def save_model(net, optim, scheduler, recorder, is_best=False):
-    #model_dir = os.path.join(recorder.work_dir, 'ckpt')
+    #TODO model_dir = os.path.join(recorder.work_dir, 'ckpt')
     model_dir = recorder.work_dir
     os.system('mkdir -p {}'.format(model_dir))
     epoch = recorder.epoch

@@ -5,6 +5,7 @@ import torch.nn.functional as F
 from lanedet.models.registry import AGGREGATORS 
 
 from mmcv.cnn import ConvModule
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class PositionEmbeddingSine(nn.Module):
     """

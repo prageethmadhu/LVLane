@@ -1,0 +1,59 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: class integration with text file",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args":["--root","C:/Users/Pragiya/MSC_Research/LVLane/data/tusimple/",
+                    "--savedir","seg_label_02",
+                    "--filename","1LVLane_train_sunny"]
+        },
+        {
+            "name": "Python Debugger: Training",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/ufld/resnet18_tusimple.py",
+                "--gpus",
+                "0",
+                "--work_dirs","data",
+                "--finetune_from","best-ts-lv2.pth"
+            ]
+        },
+        {
+            "name": "Python Debugger:Testing",
+            "type": "debugpy",
+            "request": "launch",
+            // "program": "${file}",
+            // "program": "tools/detect_video.py",
+            "program": "tools/detect.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/ufld/resnet18_tusimple.py",
+                "--img",
+                "keyframe_0580.jpg",
+                "--savedir",
+                "results/",
+                "--load_from",
+                "1_copy.pth"
+            ]
+            // "args": [
+            //     "configs/ufld/resnet18_tusimple.py",
+            //     "--video",
+            //     "videoplayback3.mp4",
+            //     "--output",
+            //     "results/",
+            //     "--load_from",
+            //     "best-ts-lv2.pth"
+            // ]
+        }
+    ]
+}

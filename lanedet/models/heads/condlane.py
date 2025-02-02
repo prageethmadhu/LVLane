@@ -7,7 +7,7 @@ from lanedet.core.lane import Lane
 import numpy as np
 import math
 import random
-device = torch.device('cpu')
+
 from ..registry import HEADS
 
 def _neg_loss(pred, gt, channel_weights=None):

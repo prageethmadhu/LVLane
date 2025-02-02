@@ -103,8 +103,8 @@ class Runner(object):
             if (epoch + 1) % self.cfg.save_ep == 0 or epoch == self.cfg.epochs - 1:
                 self.save_ckpt()
             if (epoch + 1) % self.cfg.eval_ep == 0 or epoch == self.cfg.epochs - 1:
-               # self.validate()
-               pass
+              pass
+              #TODO  self.validate()
             if self.recorder.step >= self.cfg.total_iter:
                 break
             if self.cfg.lr_update_by_epoch:
