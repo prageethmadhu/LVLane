@@ -5,14 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Debugger: Visualization",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python Debugger: class integration with text file",
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args":["--root","C:/Users/Pragiya/MSC_Research/LVLane/data/tusimple/",
-                    "--savedir","seg_label_02",
-                    "--filename","1LVLane_train_sunny"]
+            "args": [
+                "--root",
+                "C:/Users/Pragiya/MSC_Research/LVLane/data/tusimple/",
+                "--savedir",
+                "seg_label_02",
+                "--filename",
+                "1LVLane_train_sunny"
+            ]
         },
         {
             "name": "Python Debugger: Training",
@@ -24,8 +36,10 @@
                 "configs/ufld/resnet18_tusimple.py",
                 "--gpus",
                 "0",
-                "--work_dirs","data",
-                "--finetune_from","best-ts-lv2.pth"
+                "--work_dirs",
+                "data",
+                "--finetune_from",
+                "best-ts-lv2.pth"
             ]
         },
         {
