@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Debugger: Ordinal_debug_py_file",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python Debugger: Visualization",
             "type": "debugpy",
             "request": "launch",
@@ -23,7 +30,7 @@
                 "--savedir",
                 "seg_label_02",
                 "--filename",
-                "1LVLane_train_sunny"
+                "LVLane_train_sunny"
             ]
         },
         {
@@ -53,11 +60,11 @@
             "args": [
                 "configs/ufld/resnet18_tusimple.py",
                 "--img",
-                "keyframe_0580.jpg",
+                "demo.jpg",
                 "--savedir",
                 "results/",
                 "--load_from",
-                "1_copy.pth"
+                "1.pth"
             ]
             // "args": [
             //     "configs/ufld/resnet18_tusimple.py",

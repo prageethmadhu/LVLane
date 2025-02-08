@@ -18,7 +18,7 @@ from sklearn.metrics import confusion_matrix
 
 SPLIT_FILES = {    
     #TODO change traing samole json aacordingly ['1LVLane_train_sunny.json', 'label_data_0601.json', 'label_data_0531.json'],
-    'trainval': ['1LVLane_train_sunny.json'],
+    'trainval': ['LVLane_train_sunny.json'],
     'val': ['test_label.json'],
     'test': ['test_label.json']
 }

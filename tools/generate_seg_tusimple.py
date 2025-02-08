@@ -5,7 +5,7 @@ import os
 import argparse
 
 #TODO set this when generating seg_lable anotation formatting.['label_data_0313.json', 'label_data_0601.json']
-TRAIN_SET = ['1LVLane_train_sunny.json']
+TRAIN_SET = ['LVLane_train_sunny.json']
 VAL_SET = ['label_data_0531.json']
 
 # create mask labels and class labels
