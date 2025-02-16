@@ -26,6 +26,7 @@ def gen_label_from_json(data_root, data_savedir, file_name):
             class_lines = cat_file.readlines()
             line_index = 0
             while line_index < len(json_lines):
+                print(line_index)
                 line = json_lines[line_index]
                 label = json.loads(line)
                 class_line = class_lines[line_index]

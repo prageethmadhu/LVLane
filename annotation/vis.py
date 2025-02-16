@@ -109,7 +109,7 @@ def process(root_dir, json_file):
 
 if __name__=='__main__':
     ap = ArgParse()
-    ap.add_argument('--root', type=str, default='/home/zillur/programs/datasets/tusimple/')
+    ap.add_argument('--root', type=str, default='C:\\Users\\Pragiya\\MSC_Research\\LVLane\\data\\tusimple\\')
     ap.add_argument('--labels', type=str, default='LVLane_train_sunny.json')
 
     args = ap.parse_args()
