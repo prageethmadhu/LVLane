@@ -5,6 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "TEST",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/ufld/resnet18_tusimple.py",
+                "--test",
+                "--load_from",
+                "1.pth",
+                "--gpus",
+                "0",
+                "--view"
+            ]
+        },
+        {
             "name": "Python Debugger: Ordinal_debug_py_file",
             "type": "debugpy",
             "request": "launch",
@@ -26,9 +42,9 @@
             "console": "integratedTerminal",
             "args": [
                 "--root",
-                "C:/Users/Pragiya/MSC_Research/LVLane/data/tusimple/",
+                "C://Users//Pragiya//MSC_Research//LVLane//data//tusimple//",
                 "--savedir",
-                "seg_label_02",
+                "seg_label",
                 "--filename",
                 "LVLane_train_sunny"
             ]
@@ -60,11 +76,11 @@
             "args": [
                 "configs/ufld/resnet18_tusimple.py",
                 "--img",
-                "demo.jpg",
+                "C:\\Users\\Pragiya\\MSC_Research\\LVLane\\data\\tusimple\\clips\\80\\3.jpg",
                 "--savedir",
                 "results/",
                 "--load_from",
-                "1.pth"
+                "AA.pth"
             ]
             // "args": [
             //     "configs/ufld/resnet18_tusimple.py",

@@ -1,0 +1,24 @@
+did the traiing with 200 images 
+
+sample rate 30 to capture from video.
+
+
+did visual inspection:
+
+result:
+
+when trained with middle camera angle and road is wide ( no bend) this traiined model gives good result than pretrainned model.
+
+find some problem 
+whne bend or camera angle difference(different location or my car overtaking a a vehicle)
+it seems model not capture well.
+
+protential solution:
+
+increase framerate on such instance may increase accuracy.
+
+camera move to different location and capture images.
+
+(this annotattion and preprocessing taking considerable time and effort>>
+may be descope to these camera angles or may be finetune the model with more data with high framerate
+in such occations.)

@@ -1,0 +1,4 @@
+need to do the cross validation.
+basic need to focus.
+trainng testing need to done.
+

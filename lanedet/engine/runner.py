@@ -154,9 +154,9 @@ class Runner(object):
         y_pred = []
         self.net.eval()
         detection_predictions = []
-        start = torch.cuda.Event(enable_timing=True)
-        end = torch.cuda.Event(enable_timing=True)
-        start.record()
+        # start = torch.cuda.Event(enable_timing=True)
+        # end = torch.cuda.Event(enable_timing=True)
+        # start.record()
         for i, data in enumerate(tqdm(self.test_loader, desc=f'test')):
             data = self.to_cuda(data)
             with torch.no_grad():
@@ -166,17 +166,17 @@ class Runner(object):
 
                 if self.cfg.classification:
                     y_true.extend((data['category'].cpu().numpy()).flatten('C').tolist())
-                    score = F.softmax(output['category'].cuda(), dim=1)
+                    score = F.softmax(output['category'].cpu(), dim=1)
                     score = score.argmax(dim=1)
                     y_pred.extend((score.cpu().numpy()).flatten('C').tolist())
 
-                    classification_acc += self.test_loader.dataset.evaluate_classification(output['category'].cuda(), data['category'].cuda())
+                    classification_acc += self.test_loader.dataset.evaluate_classification(output['category'].cpu(), data['category'].cpu())
             if self.cfg.view:
                 self.test_loader.dataset.view(detection_output, data['meta'])
         
-        end.record()
-        torch.cuda.synchronize()  
-        print('execution time in milliseconds per image: {}'. format(start.elapsed_time(end)/2782))
+        #end.record()
+        #torch.cuda.synchronize()  
+        #print('execution time in milliseconds per image: {}'. format(start.elapsed_time(end)/2782))
         
         detection_out = self.test_loader.dataset.evaluate_detection(detection_predictions, self.cfg.work_dir)
 
