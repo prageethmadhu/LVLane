@@ -5,6 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Video",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "tools/detect_video.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/ufld/resnet18_tusimple.py",
+                "--video",
+                "crash_ori.mp4",
+                "--output",
+                "1_video_out",
+                "--load_from",
+                "AA.pth"
+            ]
+        },
+        {
             "name": "TEST",
             "type": "debugpy",
             "request": "launch",
