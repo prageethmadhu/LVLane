@@ -28,7 +28,6 @@ class VideoLaneDetection:
     def __init__(self, cfg, yolo_model_path='yolov8n.pt'):
         """Initialize lane detection model and YOLO vehicle detector."""
         self.cfg = cfg
-        # Use the inference process as in your working detection code.
         self.processes = Process(cfg.infer_process, cfg)
         self.net = build_net(self.cfg)
         self.net = torch.nn.parallel.DataParallel(self.net, device_ids=range(1)).to(device)
@@ -104,11 +103,11 @@ class VideoLaneDetection:
     def get_lane_type_from_class(self, lane_class):
         """
         Map numeric lane class (from classification) to a string lane type.
-        Adjust the mapping based on your training setup.
         For example:
             0 -> "solid"
             1 -> "dashed"
             2 -> "double"
+        Adjust the mapping based on your training setup.
         """
         mapping = {0: "solid", 1: "dashed", 2: "double"}
         return mapping.get(lane_class, "solid")
@@ -118,10 +117,10 @@ class VideoLaneDetection:
         Visualize detected lanes and vehicles.
         
         - Draw each lane with its assigned color.
-        - For violation detection, only use the "mid-line" points.
-          The mid-line is determined as the lane whose average normalized x-coordinate is closest to 0.5.
+        - Determine the mid-line (using the lane with average normalized x closest to 0.5).
+        - Only if the mid-line is of type "dashed" (magenta) will its points be used for violation detection.
         - For each vehicle, compute an inner rectangle (80% width, 30% height, bottom-anchored)
-          and flag a violation if any mid-line point falls within that inner rectangle.
+          and flag a violation if any mid-line point (from the dashed mid-line) falls within that rectangle.
         """
         img = data['ori_img'].copy()
         all_lanes = data.get('lanes', [])
@@ -129,7 +128,7 @@ class VideoLaneDetection:
             all_lanes = [all_lanes]
         
         # Determine the mid-line index using a simple heuristic:
-        # For each lane (assumed to have normalized x coordinates in lane.points), compute the average x.
+        # For each lane, compute the average normalized x coordinate.
         mid_line_idx = None
         mid_line_distance = float('inf')
         for i, lane in enumerate(all_lanes):
@@ -140,12 +139,20 @@ class VideoLaneDetection:
                     mid_line_distance = distance
                     mid_line_idx = i
         logging.debug(f"Selected mid-line index: {mid_line_idx} (distance={mid_line_distance})")
-
-        # For drawing, we still draw all lanes, but only accumulate mid-line points for violation check.
+        
+        # Determine the mid-line's lane type.
+        mid_line_type = None
+        if mid_line_idx is not None:
+            if lane_classes is not None and mid_line_idx < len(lane_classes):
+                mid_line_type = self.get_lane_type_from_class(lane_classes[mid_line_idx])
+            else:
+                mid_line_type = getattr(all_lanes[mid_line_idx], 'lane_type', "solid")
+            logging.debug(f"Mid-line lane type: {mid_line_type}")
+        
+        # Only accumulate violation points if the mid-line is "dashed" (magenta).
         violation_lane_points = []
         for idx, lane in enumerate(all_lanes):
             if isinstance(lane, Lane):
-                # If classification is enabled and a class exists for this lane, use it.
                 if lane_classes is not None and idx < len(lane_classes):
                     lane_type = self.get_lane_type_from_class(lane_classes[idx])
                     logging.debug(f"Lane {idx}: using classified type '{lane_type}'")
@@ -159,14 +166,14 @@ class VideoLaneDetection:
                         if x > 0 and y > 0:
                             px = int(x * img.shape[1])
                             py = int(y * img.shape[0])
-                            # Only add points from the mid-line for violation detection.
-                            if idx == mid_line_idx:
+                            # Only add points from the mid-line if it is dashed.
+                            if idx == mid_line_idx and mid_line_type == "dashed":
                                 violation_lane_points.append((px, py))
                             cv2.circle(img, (px, py), 4, color, 2)
                 else:
                     logging.warning("Lane.points is None.")
             elif isinstance(lane, list):
-                # For lists of lanes, process each sub-lane.
+                # Process each sub-lane.
                 for j, sub_lane in enumerate(lane):
                     if isinstance(sub_lane, Lane):
                         if lane_classes is not None and idx < len(lane_classes):
@@ -182,8 +189,8 @@ class VideoLaneDetection:
                                 if x > 0 and y > 0:
                                     px = int(x * img.shape[1])
                                     py = int(y * img.shape[0])
-                                    # Only use sub-lane points if this sub-lane is part of the mid-line.
-                                    if idx == mid_line_idx:
+                                    # Only add points if this sub-lane belongs to the mid-line and it is dashed.
+                                    if idx == mid_line_idx and mid_line_type == "dashed":
                                         violation_lane_points.append((px, py))
                                     cv2.circle(img, (px, py), 4, color, 2)
                         else:
@@ -191,7 +198,7 @@ class VideoLaneDetection:
             else:
                 logging.warning("Unexpected lane format encountered.")
         
-        # Process each detected vehicle box using only the mid-line points for violation detection.
+        # Process each detected vehicle box using only the mid-line points (if any).
         for (x1, y1, x2, y2) in vehicle_boxes:
             box_width = x2 - x1
             box_height = y2 - y1
