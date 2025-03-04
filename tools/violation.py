@@ -117,28 +117,35 @@ class VideoLaneDetection:
         Visualize detected lanes and vehicles.
         
         - Draw each lane with its assigned color.
-        - Determine the mid-line (using the lane with average normalized x closest to 0.5).
-        - Only if the mid-line is of type "dashed" (magenta) will its points be used for violation detection.
+        - Determine the mid-line by sorting lanes by their average normalized x coordinate and selecting the second from left.
+        - Only if the selected mid-line is of type "dashed" (magenta) will its points be used for violation detection.
         - For each vehicle, compute an inner rectangle (80% width, 30% height, bottom-anchored)
-          and flag a violation if any mid-line point (from the dashed mid-line) falls within that rectangle.
+          and flag a violation if any mid-line point falls within that rectangle.
         """
         img = data['ori_img'].copy()
         all_lanes = data.get('lanes', [])
         if not isinstance(all_lanes, list):
             all_lanes = [all_lanes]
         
-        # Determine the mid-line index using a simple heuristic:
-        # For each lane, compute the average normalized x coordinate.
-        mid_line_idx = None
-        mid_line_distance = float('inf')
+        # Compute average normalized x for each lane.
+        lane_avg_x = []
         for i, lane in enumerate(all_lanes):
             if isinstance(lane, Lane) and lane.points is not None and len(lane.points) > 0:
                 avg_x = np.mean(lane.points[:, 0])
-                distance = abs(avg_x - 0.5)
-                if distance < mid_line_distance:
-                    mid_line_distance = distance
-                    mid_line_idx = i
-        logging.debug(f"Selected mid-line index: {mid_line_idx} (distance={mid_line_distance})")
+                lane_avg_x.append((i, avg_x))
+            else:
+                lane_avg_x.append((i, float('inf')))
+        # Sort lanes from left to right (i.e., ascending average x).
+        lane_avg_x.sort(key=lambda item: item[1])
+        logging.debug(f"Sorted lanes by average x: {lane_avg_x}")
+        # Select the second lane from the left if available, else fallback to the first.
+        if len(lane_avg_x) >= 2:
+            mid_line_idx = lane_avg_x[1][0]
+        elif len(lane_avg_x) > 0:
+            mid_line_idx = lane_avg_x[0][0]
+        else:
+            mid_line_idx = None
+        logging.debug(f"Selected mid-line index (second from left): {mid_line_idx}")
         
         # Determine the mid-line's lane type.
         mid_line_type = None
@@ -189,7 +196,6 @@ class VideoLaneDetection:
                                 if x > 0 and y > 0:
                                     px = int(x * img.shape[1])
                                     py = int(y * img.shape[0])
-                                    # Only add points if this sub-lane belongs to the mid-line and it is dashed.
                                     if idx == mid_line_idx and mid_line_type == "dashed":
                                         violation_lane_points.append((px, py))
                                     cv2.circle(img, (px, py), 4, color, 2)
