@@ -25,7 +25,7 @@ logging.basicConfig(level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(m
 device = torch.device('cpu')
 
 class VideoLaneDetection:
-    def __init__(self, cfg, yolo_model_path='yolov8n.pt'):
+    def __init__(self, cfg, yolo_model_path='yolov8x.pt'):
         """Initialize lane detection model and YOLO vehicle detector."""
         self.cfg = cfg
         self.processes = Process(cfg.infer_process, cfg)
@@ -117,10 +117,13 @@ class VideoLaneDetection:
         Visualize detected lanes and vehicles.
         
         - Draw each lane with its assigned color.
-        - Determine the mid-line by sorting lanes by their average normalized x coordinate and selecting the second from left.
-        - Only if the selected mid-line is of type "dashed" (magenta) will its points be used for violation detection.
+        - Determine the mid-line by sorting lanes by their average normalized x coordinate
+          and selecting the second from the left.
+        - Only if the selected mid-line is of type "dashed" (magenta) will its points be used
+          for violation detection.
         - For each vehicle, compute an inner rectangle (80% width, 30% height, bottom-anchored)
           and flag a violation if any mid-line point falls within that rectangle.
+        - Each vehicle detection is annotated with its vehicle ID.
         """
         img = data['ori_img'].copy()
         all_lanes = data.get('lanes', [])
@@ -135,7 +138,7 @@ class VideoLaneDetection:
                 lane_avg_x.append((i, avg_x))
             else:
                 lane_avg_x.append((i, float('inf')))
-        # Sort lanes from left to right (i.e., ascending average x).
+        # Sort lanes from left to right.
         lane_avg_x.sort(key=lambda item: item[1])
         logging.debug(f"Sorted lanes by average x: {lane_avg_x}")
         # Select the second lane from the left if available, else fallback to the first.
@@ -204,8 +207,8 @@ class VideoLaneDetection:
             else:
                 logging.warning("Unexpected lane format encountered.")
         
-        # Process each detected vehicle box using only the mid-line points (if any).
-        for (x1, y1, x2, y2) in vehicle_boxes:
+        # Process each detected vehicle box and annotate with vehicle ID.
+        for vid, (x1, y1, x2, y2) in enumerate(vehicle_boxes):
             box_width = x2 - x1
             box_height = y2 - y1
             # Compute inner rectangle: 80% width, 30% height, centered horizontally and bottom-anchored.
@@ -228,9 +231,10 @@ class VideoLaneDetection:
                 label = "Vehicle"
                 logging.debug(f"Vehicle box {(x1, y1, x2, y2)} is clear.")
 
-            # Draw the outer vehicle bounding box and label.
+            # Draw the outer vehicle bounding box.
             cv2.rectangle(img, (x1, y1), (x2, y2), outer_color, 2)
-            cv2.putText(img, label, (x1, y1 - 5),
+            # Annotate with the label and vehicle ID.
+            cv2.putText(img, f"{label} {vid}", (x1, y1 - 5),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, outer_color, 2)
             # Draw the inner rectangle in blue.
             cv2.rectangle(img, (inner_x1, inner_y1), (inner_x2, inner_y2), (255, 0, 0), 2)
