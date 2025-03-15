@@ -42,8 +42,8 @@ def compute_iou(boxA, boxB):
     return iou
 
 class VideoLaneDetection:
-    def __init__(self, cfg, yolo_model_path='yolov8n.pt'):
-        """Initialize lane detection model, YOLO vehicle detector, and tracker."""
+    def __init__(self, cfg, yolo_model_path='yolov8n.pt', helmet_model_path='/home/prageeth/proj/LVLane/best.pt'):
+        """Initialize lane detection model, YOLO vehicle detector, helmet detector, and tracker."""
         self.cfg = cfg
         self.processes = Process(cfg.infer_process, cfg)
         self.net = build_net(self.cfg)
@@ -53,8 +53,8 @@ class VideoLaneDetection:
         self.net.eval()
         load_network(self.net, self.cfg.load_from)
         self.yolo_model = YOLO(yolo_model_path)
+        self.helmet_model = YOLO(helmet_model_path)  # Load helmet model
         # Tracker variables.
-        # Each track is stored as: { track_id: { "box": (x1,y1,x2,y2), "lost": count } }
         self.tracks = {}
         self.next_vehicle_id = 0
         self.iou_threshold = 0.3  # Minimum IoU to match a track.
@@ -83,16 +83,10 @@ class VideoLaneDetection:
     def update_tracks(self, new_boxes):
         """
         Update tracks using IoU matching.
-        Each new box is compared against existing tracks.
-        If a box has IoU > threshold with an existing track, update that track;
-        otherwise, create a new track.
-        Also, increment lost counter for unmatched tracks and remove if lost too many frames.
         Returns a list of tuples: (vehicle_id, box)
         """
         assignments = []
         updated_tracks = {}
-
-        # First, match new boxes to existing tracks.
         for box in new_boxes:
             best_iou = 0.0
             best_id = None
@@ -105,13 +99,10 @@ class VideoLaneDetection:
                 assignments.append((best_id, box))
                 updated_tracks[best_id] = {"box": box, "lost": 0}
             else:
-                # Create new track.
                 new_id = self.next_vehicle_id
                 self.next_vehicle_id += 1
                 assignments.append((new_id, box))
                 updated_tracks[new_id] = {"box": box, "lost": 0}
-
-        # For tracks not updated, increase lost count.
         for track_id, track in self.tracks.items():
             if track_id not in updated_tracks:
                 track["lost"] += 1
@@ -158,18 +149,12 @@ class VideoLaneDetection:
     def visualize(self, data, tracked_vehicle_boxes, lane_classes=None, out_file=None):
         """
         Visualize detected lanes and tracked vehicles.
-        
-        - Draw each lane with its assigned color.
-        - Select the mid-line by sorting lanes by average normalized x and taking the second from the left.
-        - Only if the mid-line is "dashed" (magenta) will its points be used for violation detection.
-        - Draw each tracked vehicle box with its vehicle ID.
         """
         img = data['ori_img'].copy()
         all_lanes = data.get('lanes', [])
         if not isinstance(all_lanes, list):
             all_lanes = [all_lanes]
         
-        # Compute average normalized x for each lane.
         lane_avg_x = []
         for i, lane in enumerate(all_lanes):
             if isinstance(lane, Lane) and lane.points is not None and len(lane.points) > 0:
@@ -240,7 +225,6 @@ class VideoLaneDetection:
             else:
                 logging.warning("Unexpected lane format encountered.")
         
-        # Process each tracked vehicle box (with persistent vehicle IDs).
         for vehicle_id, (x1, y1, x2, y2) in tracked_vehicle_boxes:
             box_width = x2 - x1
             box_height = y2 - y1
@@ -272,6 +256,50 @@ class VideoLaneDetection:
             logging.info(f"Saved visualization to {out_file}")
         data['ori_img'] = img
 
+    def detect_helmet_violations(self, frame):
+        """Detect helmet violations using the YOLO11x model and draw results on the frame."""
+        # Run helmet model inference
+        results = self.helmet_model(frame, conf=0.1)
+
+        # Extract detections
+        boxes = results[0].boxes.xyxy.cpu().numpy()  # [x1, y1, x2, y2]
+        confs = results[0].boxes.conf.cpu().numpy()  # Confidence scores
+        class_ids = results[0].boxes.cls.cpu().numpy()  # Class IDs
+        names = [results[0].names[int(cls)] for cls in class_ids]  # Class names
+
+        # Check for helmet violations
+        motorcycle_boxes = []
+        no_helmet_boxes = []
+        for box, name in zip(boxes, names):
+            if name == "motorcycle":
+                motorcycle_boxes.append(box)
+            elif name == "without_helmet":
+                no_helmet_boxes.append(box)
+
+        violations = []
+        for nh_box in no_helmet_boxes:
+            for m_box in motorcycle_boxes:
+                nh_cx, nh_cy = (nh_box[0] + nh_box[2]) / 2, (nh_box[1] + nh_box[3]) / 2
+                m_cx, m_cy = (m_box[0] + m_box[2]) / 2, (m_box[1] + m_box[3]) / 2
+                distance = np.sqrt((nh_cx - m_cx) ** 2 + (nh_cy - m_cy) ** 2)
+                if distance < 150:  # Adjust this threshold as needed
+                    violations.append(nh_box)
+
+        # Draw helmet-related boxes
+        for box, conf, name in zip(boxes, confs, names):
+            x1, y1, x2, y2 = map(int, box)
+            color = (0, 255, 0)  # Green for normal
+            label = f"{name} {conf:.2f}"
+
+            if name == "without_helmet" and any(np.array_equal(box, v) for v in violations):
+                color = (0, 0, 255)  # Red for violations
+                label = f"HELMET VIOLATION {conf:.2f}"
+
+            cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+            cv2.putText(frame, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+
+        return frame
+
     def process_video(self, input_path, output_path=None):
         cap = cv2.VideoCapture(input_path)
         if not cap.isOpened():
@@ -299,6 +327,10 @@ class VideoLaneDetection:
                 new_boxes = self.detect_vehicles(frame)
                 tracked_vehicle_boxes = self.update_tracks(new_boxes)
                 self.visualize(data, tracked_vehicle_boxes, lane_classes=lane_classes, out_file=None)
+
+                # Integrate helmet violation detection
+                data['ori_img'] = self.detect_helmet_violations(data['ori_img'])
+
                 if video_writer:
                     video_writer.write(data['ori_img'])
                 cv2.imshow("Lane & Vehicle Violation Detection", data['ori_img'])
