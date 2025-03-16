@@ -1,0 +1,186 @@
+# Use Ubuntu 24.04 as the base image
+FROM ubuntu:24.04
+
+# Set working directory
+WORKDIR /app
+
+# Install basic dependencies for Conda and build tools for pip packages
+RUN apt-get update && apt-get install -y \
+    wget \
+    bzip2 \
+    ca-certificates \
+    gcc \
+    libc6-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Download and install Miniconda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+    /bin/bash /tmp/miniconda.sh -b -p /opt/conda && \
+    rm /tmp/miniconda.sh
+
+# Add Conda to PATH
+ENV PATH="/opt/conda/bin:${PATH}"
+
+# Copy the environment.yml file
+COPY environment.yml .
+
+# Create the Conda environment from the YAML file
+RUN conda env create -f environment.yml
+
+# Activate the environment in the shell
+SHELL ["/bin/bash", "-c"]
+RUN echo "source activate your_env_name" >> ~/.bashrc
+
+# Optional: Copy your application code
+COPY . /app
+
+# Set the default command
+CMD ["bash"]
+
+########################################################### docker versio 001
+
+# Use Ubuntu 24.04 as the base image
+FROM ubuntu:24.04
+
+# Set working directory
+WORKDIR /app
+
+# Install basic dependencies for Conda and build tools for pip packages
+RUN apt-get update && apt-get install -y \
+    wget \
+    bzip2 \
+    ca-certificates \
+    gcc \
+    libc6-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Download and install Miniconda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+    /bin/bash /tmp/miniconda.sh -b -p /opt/conda && \
+    rm /tmp/miniconda.sh
+
+# Add Conda to PATH
+ENV PATH="/opt/conda/bin:${PATH}"
+
+# Copy the environment.yml file
+COPY environment.yml .
+
+# Create the Conda environment from the YAML file
+RUN conda env create -f environment.yml
+
+# Activate the environment in the shell
+SHELL ["/bin/bash", "-c"]
+RUN echo "source activate your_env_name" >> ~/.bashrc
+
+# Optional: Copy your application code
+COPY . /app
+
+# Set the default command
+CMD ["bash"]
+
+############################################# version 02
+
+# Use Ubuntu 24.04 as the base image
+FROM ubuntu:24.04
+
+# Set working directory
+WORKDIR /app
+
+# Install basic dependencies for Conda and build tools for pip packages
+RUN apt-get update && apt-get install -y \
+    wget \
+    bzip2 \
+    ca-certificates \
+    gcc \
+    g++ \
+    libc6-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Download and install Miniconda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+    /bin/bash /tmp/miniconda.sh -b -p /opt/conda && \
+    rm /tmp/miniconda.sh
+
+# Add Conda to PATH
+ENV PATH="/opt/conda/bin:${PATH}"
+
+# Copy the environment.yml file
+COPY environment.yml .
+
+# Create the Conda environment from the YAML file
+RUN conda env create -f environment.yml
+
+# Activate the environment in the shell
+SHELL ["/bin/bash", "-c"]
+RUN echo "source activate lanedet" >> ~/.bashrc
+
+# Optional: Copy your application code
+COPY . /app
+
+# Set the default command
+CMD ["bash"]
+
+######################################### virsion 03
+
+If You’re in a Docker Container
+If changes like apt-get install don’t stick (because containers are ephemeral unless committed), here’s what to do:
+
+Exit the Container
+Type exit to leave the current container session.
+Run a New Container with Interactive Shell
+Start your image again with -it to get a shell:
+bash
+
+Collapse
+
+Wrap
+
+Copy
+docker run -it lvlane_ubuntu_image bash
+Install libcrypt-dev Inside
+Inside the container:
+bash
+
+Collapse
+
+Wrap
+
+Copy
+apt-get update && apt-get install -y libcrypt-dev
+Build Again
+Navigate to /app/LVLane/ and retry:
+bash
+
+Collapse
+
+Wrap
+
+Copy
+cd /app/LVLane/
+python setup.py build
+Commit the Changes (Optional)
+If this works and you want to save the updated environment:
+Find the container ID:
+bash
+
+Collapse
+
+Wrap
+
+Copy
+docker ps -a
+Commit it to a new image:
+bash
+
+Collapse
+
+Wrap
+
+Copy
+docker commit <container_id> lvlane_ubuntu_image_updated
+
+#######
+https://grok.com/chat/1b9e24f4-81eb-42e9-8834-c1e39aa80266
+https://grok.com/chat/0f373d24-0985-4022-8e06-e60bd1daa111
+https://gemini.google.com/app/300fdf63abbdde54
+https://chatgpt.com/c/67d6933a-fd30-8004-96d7-33d1d4d775fa
