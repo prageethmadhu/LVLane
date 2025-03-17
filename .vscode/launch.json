@@ -5,6 +5,61 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Violation",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "tools/violation.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/ufld/resnet18_tusimple.py",
+                "--video",
+                "08320708.mp4",
+                "--output",
+                "out_non_violation_15.mp4",
+                "--load_from",
+                "AA.pth"
+            ]
+        },
+        {
+            "name": "Violation-With-Helmet",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "tools/violation_integrate_helmet.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/ufld/resnet18_tusimple.py",
+                "--video",
+                "violation_16.mp4",
+                "--output",
+                "out_non_violation_15.mp4",
+                "--load_from",
+                "AA.pth"
+            ]
+        },
+        {
+            "name": "Violation-With-Helmet-Cuda",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "tools/violation_integrate_helmet_cuda.py",
+            "console": "integratedTerminal",
+            "args": [
+                "configs/ufld/resnet18_tusimple.py",
+                "--video",
+                "violation_16.mp4",
+                "--output",
+                "out_non_violation_15.mp4",
+                "--load_from",
+                "AA.pth"
+            ]
+        },
+        {
             "name": "Video",
             "type": "debugpy",
             "request": "launch",
