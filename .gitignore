@@ -29,3 +29,5 @@ pretrained_models
 my_anno_all
 results
 cross-validation
+
+*.mp4
