@@ -53,18 +53,21 @@ class VideoLaneDetection:
         self.net.eval()
         load_network(self.net, self.cfg.load_from)
         self.yolo_model = YOLO(yolo_model_path)
-        self.helmet_model = YOLO(helmet_model_path)  # Load helmet model
-        # Tracker variables.
-        self.tracks = {}
+        self.helmet_model = YOLO(helmet_model_path)
+        # Tracker variables
+        self.tracks = {}  # Now stores {"box": box, "lost": int, "violation_count": int}
         self.next_vehicle_id = 0
-        self.iou_threshold = 0.3  # Minimum IoU to match a track.
-        self.lost_threshold = 3   # Frames to wait before removing a track.
+        self.iou_threshold = 0.3
+        self.lost_threshold = 3
 
     def preprocess(self, frame):
         """Prepare image for lane detection model."""
         ori_img = frame.copy()
+        # Lane detections are only interested in bottom of the image. No sky needed.
         img = cv2.resize(ori_img[self.cfg.cut_height:, :, :], (800, 288))
+        # The (channels, height, width) format (NCHW) is standard for PyTorch models.
         img = img.astype(np.float32).transpose(2, 0, 1)
+        # PyTorch models operate on tensors, not NumPy arrays.
         img = torch.from_numpy(img).unsqueeze(0)
         data = {'img': img.to(device), 'lanes': []}
         data['ori_img'] = ori_img
@@ -76,7 +79,7 @@ class VideoLaneDetection:
         vehicle_boxes = []
         for box in results.boxes.data:
             x1, y1, x2, y2, conf, cls = box.tolist()
-            if int(cls) in [2, 3, 5, 7]:
+            if int(cls) in [2, 3, 5, 7]:  # Classes for car, motorcycle, bus, truck
                 vehicle_boxes.append((int(x1), int(y1), int(x2), int(y2)))
         return vehicle_boxes
 
@@ -96,13 +99,15 @@ class VideoLaneDetection:
                     best_iou = iou
                     best_id = track_id
             if best_iou > self.iou_threshold and best_id is not None:
+                # Preserve the violation count
+                violation_count = self.tracks[best_id]["violation_count"]
                 assignments.append((best_id, box))
-                updated_tracks[best_id] = {"box": box, "lost": 0}
+                updated_tracks[best_id] = {"box": box, "lost": 0, "violation_count": violation_count}
             else:
                 new_id = self.next_vehicle_id
                 self.next_vehicle_id += 1
                 assignments.append((new_id, box))
-                updated_tracks[new_id] = {"box": box, "lost": 0}
+                updated_tracks[new_id] = {"box": box, "lost": 0, "violation_count": 0}  # Initialize violation count
         for track_id, track in self.tracks.items():
             if track_id not in updated_tracks:
                 track["lost"] += 1
@@ -148,7 +153,7 @@ class VideoLaneDetection:
 
     def visualize(self, data, tracked_vehicle_boxes, lane_classes=None, out_file=None):
         """
-        Visualize detected lanes and tracked vehicles.
+        Visualize detected lanes and tracked vehicles with violation counts.
         """
         img = data['ori_img'].copy()
         all_lanes = data.get('lanes', [])
@@ -237,7 +242,9 @@ class VideoLaneDetection:
 
             violation = any(inner_x1 <= lx <= inner_x2 and inner_y1 <= ly <= inner_y2 
                             for (lx, ly) in violation_lane_points)
+            violation_count = self.tracks[vehicle_id]["violation_count"]
             if violation:
+                self.tracks[vehicle_id]["violation_count"] += 1  # Increment violation count
                 outer_color = (0, 0, 255)
                 label = "Violation"
                 logging.debug(f"Vehicle {vehicle_id} box {(x1, y1, x2, y2)} flagged as violation.")
@@ -247,7 +254,9 @@ class VideoLaneDetection:
                 logging.debug(f"Vehicle {vehicle_id} box {(x1, y1, x2, y2)} is clear.")
 
             cv2.rectangle(img, (x1, y1), (x2, y2), outer_color, 2)
-            cv2.putText(img, f"{label} {vehicle_id}", (x1, y1 - 5),
+            # Display vehicle ID and violation count
+            display_text = f"{label} {vehicle_id} (V:{violation_count})"
+            cv2.putText(img, display_text, (x1, y1 - 5),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, outer_color, 2)
             cv2.rectangle(img, (inner_x1, inner_y1), (inner_x2, inner_y2), (255, 0, 0), 2)
 
