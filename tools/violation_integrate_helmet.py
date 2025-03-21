@@ -42,7 +42,7 @@ def compute_iou(boxA, boxB):
     return iou
 
 class VideoLaneDetection:
-    def __init__(self, cfg, yolo_model_path='yolov8n.pt', helmet_model_path='/home/prageeth/proj/LVLane/best.pt'):
+    def __init__(self, cfg, yolo_model_path='yolov8n.pt', helmet_model_path='/home/prageeth/proj/LVLane/best.pt', violation_threshold=5):
         """Initialize lane detection model, YOLO vehicle detector, helmet detector, and tracker."""
         self.cfg = cfg
         self.processes = Process(cfg.infer_process, cfg)
@@ -59,6 +59,7 @@ class VideoLaneDetection:
         self.next_vehicle_id = 0
         self.iou_threshold = 0.3
         self.lost_threshold = 3
+        self.violation_threshold = violation_threshold  # Configurable violation count threshold
 
     def preprocess(self, frame):
         """Prepare image for lane detection model."""
@@ -154,6 +155,7 @@ class VideoLaneDetection:
     def visualize(self, data, tracked_vehicle_boxes, lane_classes=None, out_file=None):
         """
         Visualize detected lanes and tracked vehicles with violation counts.
+        Default violation color is rose, turns red if count exceeds threshold.
         """
         img = data['ori_img'].copy()
         all_lanes = data.get('lanes', [])
@@ -245,7 +247,10 @@ class VideoLaneDetection:
             violation_count = self.tracks[vehicle_id]["violation_count"]
             if violation:
                 self.tracks[vehicle_id]["violation_count"] += 1  # Increment violation count
-                outer_color = (0, 0, 255)
+                # Default violation color is rose (BGR: 180, 105, 255)
+                outer_color = (180, 105, 255)
+                if violation_count > self.violation_threshold:
+                    outer_color = (0, 0, 255)
                 label = "Violation"
                 logging.debug(f"Vehicle {vehicle_id} box {(x1, y1, x2, y2)} flagged as violation.")
             else:
@@ -360,8 +365,9 @@ if __name__ == '__main__':
     parser.add_argument('--output', help='Path to save the output video file')
     parser.add_argument('--load_from', type=str, default='best.pth', help='Path to the pretrained lane model')
     parser.add_argument('--yolo_model', type=str, default='yolov8n.pt', help='Path to YOLOv8 model')
+    parser.add_argument('--violation_threshold', type=int, default=5, help='Threshold for violation count to turn red')
     args = parser.parse_args()
     cfg = Config.fromfile(args.config)
     cfg.load_from = args.load_from
-    video_detector = VideoLaneDetection(cfg, args.yolo_model)
+    video_detector = VideoLaneDetection(cfg, args.yolo_model, violation_threshold=args.violation_threshold)
     video_detector.process_video(args.video, args.output)
