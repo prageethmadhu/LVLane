@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{newtxtext, newtxmath} % Times New Roman font for text and math
 \usepackage{setspace} % For double spacing
-\usepackage[margin=4cm, left=4cm, right=2cm, top=3cm, bottom=3cm]{geometry} % Margins
+\usepackage[margin=4cm, left=4cm, right=2cm, top=3cm, bottom=3cm]{geometry} % Margins as per guidelines
 \usepackage{graphicx}
 \usepackage{float} % For tables and figures
 \usepackage{titlesec} % For section headings
@@ -22,14 +22,21 @@
   {\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}
   {\normalfont\fontsize{12}{15}\itshape}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{12}{15}\itshape}{\thesubsubsection}{1em}{}
+% Level 4 and beyond use Roman numerals
+\setcounter{secnumdepth}{4} % Enable numbering up to subsubsection
+\titleformat{\paragraph}[runin]
+  {\normalfont\fontsize{12}{15}\itshape}{\theparagraph}{1em}{}
+\renewcommand{\theparagraph}{\Roman{paragraph}} % Roman numerals for level 4
 
 % Title Page
 \title{
     \vspace{2cm}
-    \textbf{Full Title of Your Dissertation} \\
-    \vspace{1cm}
-    \large{Your Full Name} \\
-    \vspace{1cm}
+    \textbf{A Machine Learning Approach to Predictive Analytics} \\
+    \vspace{4cm}
+    \large{John Doe} \\
+    \vspace{4cm}
     \normalsize{Dissertation submitted to the University of Sri Jayewardenepura in partial fulfillment of the requirement for the award of Master in Data Science and Artificial Intelligence.}
 }
 \author{}
@@ -37,21 +44,24 @@
 
 \begin{document}
 
-% Title Page
+% Title Page (No page number)
 \maketitle
-\thispagestyle{empty} % No page number on title page
+\thispagestyle{empty}
 \newpage
 
-% Declaration Page
+% Declaration Page (No page number)
 \section*{Declaration}
-\addcontentsline{toc}{section}{Declaration} % Add to table of contents
 \vspace{1cm}
-I hereby declare that the work described in this thesis was carried out by me and a report on this has not been submitted in whole or in part to any university or any other institution for another Degree.
+``The work described in this thesis was carried out by me and a report on this has not been submitted in whole or in part to any university or any other institution for another Degree''
 
 \vspace{2cm}
-\textbf{Your Full Name}
-
+\textbf{John Doe}
+\thispagestyle{empty}
 \newpage
+
+% Start Roman numerals from Table of Contents
+\setcounter{page}{1}
+\renewcommand{\thepage}{\roman{page}}
 
 % Table of Contents
 \tableofcontents
@@ -64,78 +74,96 @@ I hereby declare that the work described in this thesis was carried out by me an
 
 % Acknowledgements
 \section*{Acknowledgements}
-\addcontentsline{toc}{section}{Acknowledgements} % Add to table of contents
-Write your acknowledgements here.
-
+\addcontentsline{toc}{section}{Acknowledgements}
+I thank my supervisor, Dr. Jane Smith, for her guidance, and my family for their unwavering support.
 \newpage
 
 % Abstract
 \section*{Abstract}
-\addcontentsline{toc}{section}{Abstract} % Add to table of contents
+\addcontentsline{toc}{section}{Abstract}
 \begin{center}
-    \textbf{Title of Your Dissertation} \\
+    \fontsize{14}{16}\selectfont \textbf{A Machine Learning Approach to Predictive Analytics} \\
     \vspace{0.5cm}
-    \textbf{Your Full Name} \\
+    \fontsize{14}{16}\selectfont \textbf{John Doe} \\
     \vspace{0.5cm}
-    \textbf{ABSTRACT}
+    \fontsize{14}{16}\selectfont \textbf{ABSTRACT}
 \end{center}
 \vspace{1cm}
-Write your abstract here. It should not exceed two pages.
-
+\normalsize
+This dissertation explores the application of machine learning techniques to predictive analytics in healthcare. The study focuses on developing models to predict patient outcomes based on historical data, achieving an accuracy of 87\%. Challenges include data preprocessing and model interpretability.
 \newpage
 
-% Main Content
+% Switch to Arabic numerals for main content
+\setcounter{page}{1}
+\renewcommand{\thepage}{\arabic{page}}
+
+% Main Content with Sample Subsections
 \section{Introduction}
-Write your introduction here.
+Predictive analytics has transformed decision-making across industries. This study aims to leverage machine learning for healthcare predictions.
 
 \section{Literature Review}
-Write your literature review here.
+Existing research highlights the efficacy of supervised learning in predictive tasks.
 
-% Methodology Section
+\subsection{Machine Learning in Healthcare}
+Studies show high accuracy in disease prediction models.
+
+\subsubsection{Supervised Learning Techniques}
+Techniques like logistic regression and random forests dominate.
+
+\paragraph{Logistic Regression}
+Simple yet effective for binary outcomes.
+
+\paragraph{Random Forests}
+Robust for handling complex datasets.
+
+\subsection{Challenges in Predictive Analytics}
+Data quality and interpretability remain key hurdles.
+
 \section{Materials and Methods}
+This section outlines the research methodology.
+
 \subsection{Research Design}
-This section describes the overall research design, including the approach (e.g., quantitative, qualitative, or mixed methods) and the rationale for choosing this design.
+A quantitative approach was adopted.
+
+\subsubsection{Model Selection}
+Criteria included accuracy and scalability.
+
+\paragraph{Support Vector Machines}
+Chosen for their performance on small datasets.
+
+\paragraph{Neural Networks}
+Evaluated for deep learning capabilities.
 
 \subsection{Data Collection}
 \subsubsection{Data Sources}
-This subsection discusses the sources of data, such as primary data (e.g., surveys, experiments) or secondary data (e.g., databases, literature).
-
-\subsubsection{Data Collection Tools}
-This subsection describes the tools used for data collection, such as questionnaires, sensors, or software.
+Data was sourced from hospital records.
 
 \subsection{Data Analysis}
-\subsubsection{Quantitative Analysis}
-This subsection explains the statistical methods used for analyzing quantitative data, such as regression analysis or hypothesis testing.
-
-\subsubsection{Qualitative Analysis}
-This subsection describes the methods used for analyzing qualitative data, such as thematic analysis or content analysis.
-
-\subsection{Ethical Considerations}
-This subsection discusses the ethical issues related to the research, such as informed consent, data privacy, and confidentiality.
+\subsubsection{Statistical Methods}
+Regression analysis was applied.
 
 \section{Results}
-Write your results here.
+The random forest model achieved 87\% accuracy.
 
 \section{Discussion}
-Write your discussion here.
+Results align with prior studies but highlight preprocessing needs.
 
 \section{Conclusions}
-Write your conclusions here.
+Machine learning offers significant potential for healthcare predictions.
 
 % References
 \newpage
 \section*{References}
-\addcontentsline{toc}{section}{References} % Add to table of contents
-Use Harvard or Vancouver style for references. Example:
+\addcontentsline{toc}{section}{References}
 \begin{thebibliography}{9}
-\bibitem{ref1} Author, A. (Year). Title of the paper. \textit{Journal Name}, Volume(Issue), Page numbers.
+\bibitem{ref1} Smith, J. (2023) `Machine Learning in Healthcare', \textit{Journal of Data Science}, vol. 10, no. 2, pp. 45-60.
 \end{thebibliography}
 
-% Appendices (if needed)
+% Appendices
 \newpage
 \section*{Appendices}
-\addcontentsline{toc}{section}{Appendices} % Add to table of contents
-\subsection*{Appendix A: Title of Appendix}
-Write your appendix content here.
+\addcontentsline{toc}{section}{Appendices}
+\subsection*{Appendix A: Dataset Description}
+The dataset includes 10,000 patient records.
 
 \end{document}
