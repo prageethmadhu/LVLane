@@ -33,9 +33,9 @@
 % Title Page
 \title{
     \vspace{2cm}
-    \textbf{A Machine Learning Approach to Predictive Analytics} \\
+    \textbf{Deep Learning Aided Traffic Violation Detection Using Video Footage} \\
     \vspace{4cm}
-    \large{John Doe} \\
+    \large{D.G.P. Madhusanka} \\
     \vspace{4cm}
     \normalsize{Dissertation submitted to the University of Sri Jayewardenepura in partial fulfillment of the requirement for the award of Master in Data Science and Artificial Intelligence.}
 }
@@ -55,7 +55,7 @@
 ``The work described in this thesis was carried out by me and a report on this has not been submitted in whole or in part to any university or any other institution for another Degree''
 
 \vspace{2cm}
-\textbf{John Doe}
+\textbf{D.G.P. Madhusanka}
 \thispagestyle{empty}
 \newpage
 
@@ -75,95 +75,103 @@
 % Acknowledgements
 \section*{Acknowledgements}
 \addcontentsline{toc}{section}{Acknowledgements}
-I thank my supervisor, Dr. Jane Smith, for her guidance, and my family for their unwavering support.
+I express my gratitude to my supervisor, Prof. T.G.I. Fernando, for his invaluable guidance, and to my family and peers for their continuous support throughout this research.
 \newpage
 
 % Abstract
 \section*{Abstract}
 \addcontentsline{toc}{section}{Abstract}
 \begin{center}
-    \fontsize{14}{16}\selectfont \textbf{A Machine Learning Approach to Predictive Analytics} \\
+    \fontsize{14}{16}\selectfont \textbf{Deep Learning Aided Traffic Violation Detection Using Video Footage} \\
     \vspace{0.5cm}
-    \fontsize{14}{16}\selectfont \textbf{John Doe} \\
+    \fontsize{14}{16}\selectfont \textbf{D.G.P. Madhusanka} \\
     \vspace{0.5cm}
     \fontsize{14}{16}\selectfont \textbf{ABSTRACT}
 \end{center}
 \vspace{1cm}
 \normalsize
-This dissertation explores the application of machine learning techniques to predictive analytics in healthcare. The study focuses on developing models to predict patient outcomes based on historical data, achieving an accuracy of 87\%. Challenges include data preprocessing and model interpretability.
+This dissertation investigates the application of deep learning techniques to detect traffic violations using video footage, with a focus on vehicle dash camera data. The study targets violations such as illegal lane crossing, helmet non-compliance, illegal parking, and turns without signal lights. Leveraging models like LVLane and YOLO, the research addresses the inefficiencies of manual analysis, aiming to enhance law enforcement efficiency and road safety. Preliminary findings indicate challenges in dynamic video analysis and lane type detection, with ongoing efforts to fine-tune models for Sri Lankan road conditions.
 \newpage
 
 % Switch to Arabic numerals for main content
 \setcounter{page}{1}
 \renewcommand{\thepage}{\arabic{page}}
 
-% Main Content with Sample Subsections
+% Main Content
 \section{Introduction}
-Predictive analytics has transformed decision-making across industries. This study aims to leverage machine learning for healthcare predictions.
+Traffic violations, driven by reckless driving and inadequate enforcement, pose significant risks to road safety. Manual analysis of violation footage is inefficient, necessitating automated, AI-powered solutions. This research explores deep learning techniques to detect violations from video footage, aiming to improve law enforcement efficiency, reduce accidents, and enhance road discipline.
 
 \section{Literature Review}
-Existing research highlights the efficacy of supervised learning in predictive tasks.
+Prior studies provide a foundation for traffic violation detection using computer vision and deep learning.
 
-\subsection{Machine Learning in Healthcare}
-Studies show high accuracy in disease prediction models.
+\subsection{Traffic Violation Detection Systems}
+Existing research highlights varied approaches to violation detection.
 
-\subsubsection{Supervised Learning Techniques}
-Techniques like logistic regression and random forests dominate.
+\subsubsection{Computer Vision-Based Methods}
+Adikari and Karunarathne (2019, 2020) explored fixed CCTV-based systems and mathematical modeling, but these lack focus on dynamic video and deep learning, limiting applicability to our needs.
 
-\paragraph{Logistic Regression}
-Simple yet effective for binary outcomes.
+\subsubsection{Deep Learning Approaches}
+Mohammed (2023) proposed a smart detection system, yet poor documentation and lack of dynamic video analysis reduce its relevance.
 
-\paragraph{Random Forests}
-Robust for handling complex datasets.
+\subsection{Lane Detection Techniques}
+Lane detection is critical for identifying illegal lane changes.
 
-\subsection{Challenges in Predictive Analytics}
-Data quality and interpretability remain key hurdles.
+\subsubsection{Spatial CNN and Variants}
+Pan et al. (2018) introduced Spatial CNN, a foundational method, though it lacks lane type support. Qin et al. (2020) advanced this with Ultra-Fast Lane Detection, offering speed but no categorization.
+
+\subsubsection{LVLane}
+Rahman and Morris (2020) developed LVLane, supporting lane type detection with robust documentation, making it suitable for this study despite being relatively new.
 
 \section{Materials and Methods}
-This section outlines the research methodology.
+This section details the methodology for developing the detection system.
 
 \subsection{Research Design}
-A quantitative approach was adopted.
+The study adopts a quantitative approach, focusing on vehicle dash camera footage due to its prevalence in capturing violations.
 
 \subsubsection{Model Selection}
-Criteria included accuracy and scalability.
+Criteria include adaptability to dynamic conditions and lane type detection.
 
-\paragraph{Support Vector Machines}
-Chosen for their performance on small datasets.
+\paragraph{LVLane}
+Selected for lane detection due to its rich toolset and support for lane types, fine-tuned for Sri Lankan roads.
 
-\paragraph{Neural Networks}
-Evaluated for deep learning capabilities.
+\paragraph{YOLO}
+Pre-trained YOLO models are planned for helmet and parking violation detection, enhanced via transfer learning.
 
 \subsection{Data Collection}
 \subsubsection{Data Sources}
-Data was sourced from hospital records.
+Data primarily comprises dash camera footage, supplemented by police department collaboration and controlled simulations where feasible.
 
 \subsection{Data Analysis}
-\subsubsection{Statistical Methods}
-Regression analysis was applied.
+\subsubsection{Deep Learning Techniques}
+Tools like PyTorch, SciPy, and VGG assist in model training and lane annotation.
 
 \section{Results}
-The random forest model achieved 87\% accuracy.
+Initial progress shows that traditional methods like Hough Transformation fail in challenging conditions (e.g., curved roads). Deep learning models, particularly LVLane, demonstrate promise, though fine-tuning for local conditions is ongoing.
 
 \section{Discussion}
-Results align with prior studies but highlight preprocessing needs.
+Findings align with literature emphasizing the need for dynamic video analysis. Challenges include data annotation and model generalization to diverse road environments.
 
 \section{Conclusions}
-Machine learning offers significant potential for healthcare predictions.
+Deep learning offers a viable solution for traffic violation detection, with potential to scale enforcement efforts. Future work will refine models and expand violation coverage.
 
 % References
 \newpage
 \section*{References}
 \addcontentsline{toc}{section}{References}
 \begin{thebibliography}{9}
-\bibitem{ref1} Smith, J. (2023) `Machine Learning in Healthcare', \textit{Journal of Data Science}, vol. 10, no. 2, pp. 45-60.
+\bibitem{adikari2019} Adikari, A. M. S. and Karunarathne, S. M. S. P. (2019) `Computer Vision Based Approach for Traffic Violation Detection', \textit{Proceedings of the 12th International Research Conference, General Sir John Kotelawala Defence University}, Sri Lanka, pp. 136-139.
+\bibitem{adikari2020} Adikari, A. M. S. and Karunarathne, S. M. S. P. (2020) `Traffic Violation Detection System', \textit{Proceedings of the International Conference on Road and Traffic Engineering}.
+\bibitem{mohammed2023} Mohammed, R. K. (2023) `Traffic Squad - Smart Traffic Violation Detection System', \textit{International Journal of Advanced Research and Publications}, vol. 6, no. 6, pp. 21-28.
+\bibitem{pan2018} Pan, X., Shi, J., Luo, P., Wang, X., and Tang, X. (2018) `Spatial As Deep: Spatial CNN for Traffic Scene Understanding'.
+\bibitem{qin2020} Qin, Z., Wang, H., and Li, X. (2020) `Ultra Fast Structure-aware Deep Lane Detection', \textit{arXiv preprint arXiv:2004.11757}.
+\bibitem{rahman2020} Rahman, Z. and Morris, B. T. (2020) `LVLane: Deep Learning for Lane Detection and Classification in Challenging Conditions', \textit{arXiv}.
 \end{thebibliography}
 
 % Appendices
 \newpage
 \section*{Appendices}
 \addcontentsline{toc}{section}{Appendices}
-\subsection*{Appendix A: Dataset Description}
-The dataset includes 10,000 patient records.
+\subsection*{Appendix A: Methodology Details}
+Detailed configurations for LVLane and YOLO models will be included upon completion of fine-tuning.
 
 \end{document}

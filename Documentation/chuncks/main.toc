@@ -1,23 +1,24 @@
-\contentsline {section}{Acknowledgements}{iii}{Doc-Start}%
-\contentsline {section}{Abstract}{iv}{Doc-Start}%
+\contentsline {section}{Acknowledgements}{iv}{Doc-Start}%
+\contentsline {section}{Abstract}{v}{Doc-Start}%
 \contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
 \contentsline {section}{\numberline {2}Literature Review}{1}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Machine Learning in Healthcare}{1}{subsection.2.1}%
-\contentsline {subsubsection}{\numberline {2.1.1}Supervised Learning Techniques}{1}{subsubsection.2.1.1}%
-\contentsline {paragraph}{\numberline {I}Logistic Regression}{1}{paragraph.2.1.1.1}%
-\contentsline {paragraph}{\numberline {II}Random Forests}{1}{paragraph.2.1.1.2}%
-\contentsline {subsection}{\numberline {2.2}Challenges in Predictive Analytics}{1}{subsection.2.2}%
-\contentsline {section}{\numberline {3}Materials and Methods}{1}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Research Design}{1}{subsection.3.1}%
+\contentsline {subsection}{\numberline {2.1}Traffic Violation Detection Systems}{1}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Computer Vision-Based Methods}{1}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Deep Learning Approaches}{1}{subsubsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.2}Lane Detection Techniques}{1}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Spatial CNN and Variants}{2}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}LVLane}{2}{subsubsection.2.2.2}%
+\contentsline {section}{\numberline {3}Materials and Methods}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Research Design}{2}{subsection.3.1}%
 \contentsline {subsubsection}{\numberline {3.1.1}Model Selection}{2}{subsubsection.3.1.1}%
-\contentsline {paragraph}{\numberline {I}Support Vector Machines}{2}{paragraph.3.1.1.1}%
-\contentsline {paragraph}{\numberline {II}Neural Networks}{2}{paragraph.3.1.1.2}%
-\contentsline {subsection}{\numberline {3.2}Data Collection}{2}{subsection.3.2}%
-\contentsline {subsubsection}{\numberline {3.2.1}Data Sources}{2}{subsubsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.3}Data Analysis}{2}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Statistical Methods}{2}{subsubsection.3.3.1}%
-\contentsline {section}{\numberline {4}Results}{2}{section.4}%
-\contentsline {section}{\numberline {5}Discussion}{2}{section.5}%
-\contentsline {section}{\numberline {6}Conclusions}{2}{section.6}%
-\contentsline {section}{References}{3}{section.6}%
-\contentsline {section}{Appendices}{4}{section.6}%
+\contentsline {paragraph}{\numberline {I}LVLane}{2}{paragraph.3.1.1.1}%
+\contentsline {paragraph}{\numberline {II}YOLO}{2}{paragraph.3.1.1.2}%
+\contentsline {subsection}{\numberline {3.2}Data Collection}{3}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Data Sources}{3}{subsubsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.3}Data Analysis}{3}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Deep Learning Techniques}{3}{subsubsection.3.3.1}%
+\contentsline {section}{\numberline {4}Results}{3}{section.4}%
+\contentsline {section}{\numberline {5}Discussion}{3}{section.5}%
+\contentsline {section}{\numberline {6}Conclusions}{3}{section.6}%
+\contentsline {section}{References}{4}{section.6}%
+\contentsline {section}{Appendices}{5}{section.6}%
