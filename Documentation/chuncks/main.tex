@@ -123,9 +123,71 @@ Rahman and Morris (2020) developed LVLane, supporting lane type detection with r
 
 \section{Materials and Methods}
 This section details the methodology for developing the detection system.
+As this is a application based reseach we have done lot of customization and developmet and amendment to cater our need.
 
-\subsection{Research Design}
-The study adopts a quantitative approach, focusing on vehicle dash camera footage due to its prevalence in capturing violations.
+\subsection{Applcation Design}
+
+\subsubsection{Lane detection}
+
+The applicattion succsss is highly deped on the lane detection method we have done intensive liitrure review on the subject
+
+thanks to modern autonomous driving technnology advancement lande detection is widely updating and highly active area of reaserch.
+
+
+
+After we finalizing the lande detection apporoch as LvLane.
+We have trainned the model to cater sri lankan road.
+
+initail setup doen with RTX 600 powerfull trainin model.
+
+At the time I have a sinlgle cpu machine so  I have ot covert that into cpu mode.
+later on broght GPU machine but have not enogh time to convert back into GPU mode as current machine supprt more latest model.
+not supported for recent model.
+
+
+\subsubsection(perfocrmance test)
+.
+
+ 
+\paragraph{camera setup}
+(here need to describe LVLane camera setup detaisl and reference document)
+
+
+Anotations and camera adjustment encounted problems.
+camera need to be 120 apacher and LV lane trainng does not hit the target.
+
+LVLane camera setup (there wear lot of camera they have used but fortunate to new camera desing we were able to 
+replicate it with multi camera setp with mobile phone.). near to tha
+
+
+\subsubsection{Data prparation for lane detection}
+
+capture videos
+and ffimg to identify key frames.
+
+anotaed with imglable tools.
+
+( described annoated tools.)
+
+\subsection{Helmet detection details}
+
+\subsubsection{Data preparation}
+We also alble to get some times for helmet violation deteaction.
+gotten baseline dataset.
+pre annoted .
+we alson need to do some fine tune.
+
+\subsubsection{trarinnig}
+
+we Initially use Yolo n model but it not gibin avvolct pergformance
+
+then move to x model and it generate good perfoamcen
+
+
+\subsection{Inegrated system}
+
+as full product we use lanve vilation detection with helmet violation detection as full product.
+
 
 \subsubsection{Model Selection}
 Criteria include adaptability to dynamic conditions and lane type detection.
