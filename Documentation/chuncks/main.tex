@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext, newtxmath} % Times New Roman font for text and math
+\usepackage{setspace} % For double spacing
+\usepackage[margin=4cm, left=4cm, right=2cm, top=3cm, bottom=3cm]{geometry} % Margins
+\usepackage{graphicx}
+\usepackage{float} % For tables and figures
+\usepackage{titlesec} % For section headings
+\usepackage{fancyhdr} % For page numbers
+\usepackage[colorlinks=false, pdfborder={0 0 0}]{hyperref} % Disable colored links
+
+% Double spacing
+\doublespacing
+
+% Page numbering at the bottom center
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+
+% Section heading formatting
+\titleformat{\section}
+  {\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\fontsize{12}{15}\itshape}{\thesubsection}{1em}{}
+
+% Title Page
+\title{
+    \vspace{2cm}
+    \textbf{Full Title of Your Dissertation} \\
+    \vspace{1cm}
+    \large{Your Full Name} \\
+    \vspace{1cm}
+    \normalsize{Dissertation submitted to the University of Sri Jayewardenepura in partial fulfillment of the requirement for the award of Master in Data Science and Artificial Intelligence.}
+}
+\author{}
+\date{}
+
+\begin{document}
+
+% Title Page
+\maketitle
+\thispagestyle{empty} % No page number on title page
+\newpage
+
+% Declaration Page
+\section*{Declaration}
+\addcontentsline{toc}{section}{Declaration} % Add to table of contents
+\vspace{1cm}
+I hereby declare that the work described in this thesis was carried out by me and a report on this has not been submitted in whole or in part to any university or any other institution for another Degree.
+
+\vspace{2cm}
+\textbf{Your Full Name}
+
+\newpage
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% List of Tables and Figures (if needed)
+\listoftables
+\listoffigures
+\newpage
+
+% Acknowledgements
+\section*{Acknowledgements}
+\addcontentsline{toc}{section}{Acknowledgements} % Add to table of contents
+Write your acknowledgements here.
+
+\newpage
+
+% Abstract
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract} % Add to table of contents
+\begin{center}
+    \textbf{Title of Your Dissertation} \\
+    \vspace{0.5cm}
+    \textbf{Your Full Name} \\
+    \vspace{0.5cm}
+    \textbf{ABSTRACT}
+\end{center}
+\vspace{1cm}
+Write your abstract here. It should not exceed two pages.
+
+\newpage
+
+% Main Content
+\section{Introduction}
+Write your introduction here.
+
+\section{Literature Review}
+Write your literature review here.
+
+\section{Materials and Methods}
+Write your methodology here.
+
+\section{Results}
+Write your results here.
+
+\section{Discussion}
+Write your discussion here.
+
+\section{Conclusions}
+Write your conclusions here.
+
+% References
+\newpage
+\section*{References}
+\addcontentsline{toc}{section}{References} % Add to table of contents
+Use Harvard or Vancouver style for references. Example:
+\begin{thebibliography}{9}
+\bibitem{ref1} Author, A. (Year). Title of the paper. \textit{Journal Name}, Volume(Issue), Page numbers.
+\end{thebibliography}
+
+% Appendices (if needed)
+\newpage
+\section*{Appendices}
+\addcontentsline{toc}{section}{Appendices} % Add to table of contents
+\subsection*{Appendix A: Title of Appendix}
+Write your appendix content here.
+
+\end{document}

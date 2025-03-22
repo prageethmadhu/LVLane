@@ -36,7 +36,7 @@
             "args": [
                 "configs/ufld/resnet18_tusimple.py",
                 "--video",
-                "violation_16.mp4",
+                "helmetV.mp4",
                 "--output",
                 "out_non_violation_15.mp4",
                 "--load_from",

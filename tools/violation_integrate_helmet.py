@@ -302,12 +302,19 @@ class VideoLaneDetection:
         # Draw helmet-related boxes
         for box, conf, name in zip(boxes, confs, names):
             x1, y1, x2, y2 = map(int, box)
-            color = (0, 255, 0)  # Green for normal
-            label = f"{name} {conf:.2f}"
-
-            if name == "without_helmet" and any(np.array_equal(box, v) for v in violations):
-                color = (0, 0, 255)  # Red for violations
-                label = f"HELMET VIOLATION {conf:.2f}"
+            if name == "motorcycle" or name == "with_helmet":  # Light green for motorcycle and with_helmet
+                color = (144, 238, 144)
+                label = f"{name} {conf:.2f}"
+            elif name == "without_helmet":
+                if any(np.array_equal(box, v) for v in violations):
+                    color = (0, 0, 255)  # Red for violations
+                    label = f"HELMET VIOLATION {conf:.2f}"
+                else:
+                    color = (173, 216, 230)  # Light blue for without_helmet (non-violation)
+                    label = f"{name} {conf:.2f}"
+            else:
+                color = (173, 255, 0)  # Green for anything else (fallback)
+                label = f"{name} {conf:.2f}"
 
             cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
             cv2.putText(frame, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
