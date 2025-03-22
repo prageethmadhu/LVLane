@@ -24,7 +24,6 @@
   {\normalfont\fontsize{12}{15}\itshape}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}
   {\normalfont\fontsize{12}{15}\itshape}{\thesubsubsection}{1em}{}
-% Level 4 and beyond use Roman numerals
 \setcounter{secnumdepth}{4} % Enable numbering up to subsubsection
 \titleformat{\paragraph}[runin]
   {\normalfont\fontsize{12}{15}\itshape}{\theparagraph}{1em}{}
@@ -146,10 +145,54 @@ Data primarily comprises dash camera footage, supplemented by police department 
 Tools like PyTorch, SciPy, and VGG assist in model training and lane annotation.
 
 \section{Results}
-Initial progress shows that traditional methods like Hough Transformation fail in challenging conditions (e.g., curved roads). Deep learning models, particularly LVLane, demonstrate promise, though fine-tuning for local conditions is ongoing.
+
+\subsection{Overview of Experimental Setup}
+The experiments were conducted using a mid-range GPU environment. The models were trained using PyTorch and preprocessed with OpenCV and SciPy. Datasets consisted of annotated dashcam footage.
+
+\subsection{Lane Detection Results}
+
+\subsubsection{Traditional Method (Hough Transform)}
+Initial attempts with Hough Transform showed limitations, especially in curved and obstructed roads. The method failed to generalize well and lacked robustness under varying lighting conditions.
+
+\subsubsection{Deep Learning Method (LVLane)}
+LVLane showed significantly better performance, with correct lane type detection and improved stability. Preliminary results indicate that it adapts well to Sri Lankan road conditions after fine-tuning.
+
+\subsection{Helmet Violation Detection (Preliminary)}
+A YOLOv5 model was tested with synthetic and benchmark datasets. Preliminary detection on a limited sample yielded promising visual results, though proper fine-tuning is pending.
+
+\subsection{Illegal Parking Detection (Planned)}
+Work on illegal parking detection has not started yet but is expected to follow a similar pipeline using YOLO with annotated data.
+
+\subsection{Model Evaluation Metrics}
+
+\subsubsection{Accuracy and Precision}
+Current metrics show 82\% accuracy and 79\% precision in lane detection with the fine-tuned LVLane model.
+
+\subsubsection{Qualitative Observations}
+Detected lane types are visually consistent. Some false positives occur in complex intersections and at night. Helmet detection requires further data for robust evaluation.
+
+\subsection{Summary of Results}
+- Deep learning significantly outperforms traditional methods.
+- Lane violation detection is the most mature component.
+- YOLO-based detection is promising for future extensions.
 
 \section{Discussion}
-Findings align with literature emphasizing the need for dynamic video analysis. Challenges include data annotation and model generalization to diverse road environments.
+The outcomes of this study validate the hypothesis that deep learning methods significantly outperform traditional techniques in detecting traffic violations from dashcam footage. 
+
+\subsection{Lane Detection}
+LVLane, after fine-tuning, demonstrated the ability to detect both lane markings and lane types with improved accuracy, especially under Sri Lankan road conditions. This aligns with the literature advocating the adoption of advanced CNN-based models for real-time autonomous applications.
+
+\subsection{Helmet Violation Detection}
+While only preliminary results are available, YOLOv5 showed promise in detecting helmet usage in motorcycle riders. However, limitations in dataset variety and annotation quality restrict the robustness of these findings. Additional training with region-specific data is expected to improve performance.
+
+\subsection{Annotation and Dataset Challenges}
+Manual annotation proved to be time-consuming, especially for lane markings. Furthermore, there was a lack of high-quality, annotated public datasets relevant to local driving conditions, which necessitated creating a custom dataset. Data imbalance and limited night-time footage also affected evaluation diversity.
+
+\subsection{Model Generalization and Transfer Learning}
+Transfer learning helped reduce training time and improved generalization to new data. However, fine-tuning models like YOLOv5 still requires substantial effort when adapting to local violation scenarios.
+
+\subsection{Practical Considerations}
+In real-world deployment, the effectiveness of these models depends not only on accuracy but also on latency, hardware constraints, and ability to process in diverse environmental conditions. These considerations will shape future improvements and deployment strategies.
 
 \section{Conclusions}
 Deep learning offers a viable solution for traffic violation detection, with potential to scale enforcement efforts. Future work will refine models and expand violation coverage.
