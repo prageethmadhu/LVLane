@@ -180,9 +180,15 @@ Detected lane types are visually consistent. Some false positives occur in compl
 The outcomes of this study validate the hypothesis that deep learning methods significantly outperform traditional techniques in detecting traffic violations from dashcam footage. 
 
 \subsection{Lane Detection}
+\subsubsection{Challenges and Limitations}
+Despite the promising results, the model occasionally struggles in detecting lanes during night-time or poor weather conditions. Inconsistent road markings and varying camera angles in dashcam footage present difficulties in maintaining reliable lane type classification. Moreover, the need for localized datasets increases the challenge of accurate generalization.
+
 LVLane, after fine-tuning, demonstrated the ability to detect both lane markings and lane types with improved accuracy, especially under Sri Lankan road conditions. This aligns with the literature advocating the adoption of advanced CNN-based models for real-time autonomous applications.
 
 \subsection{Helmet Violation Detection}
+\subsubsection{Challenges and Limitations}
+Helmet detection is still in its early stages in this study. The primary limitation is the lack of annotated helmet violation data specific to Sri Lankan riders. Lighting variations and occlusions (e.g., rear-view mirrors, passenger interference) add complexity to accurate helmet identification. A broader and balanced dataset is needed to improve precision and recall.
+
 While only preliminary results are available, YOLOv5 showed promise in detecting helmet usage in motorcycle riders. However, limitations in dataset variety and annotation quality restrict the robustness of these findings. Additional training with region-specific data is expected to improve performance.
 
 \subsection{Annotation and Dataset Challenges}
@@ -193,6 +199,23 @@ Transfer learning helped reduce training time and improved generalization to new
 
 \subsection{Practical Considerations}
 In real-world deployment, the effectiveness of these models depends not only on accuracy but also on latency, hardware constraints, and ability to process in diverse environmental conditions. These considerations will shape future improvements and deployment strategies.
+
+\subsection{Limitations and Challenges}
+Several limitations and challenges were encountered during the research, affecting the overall process and outcomes:
+
+Data Annotation:
+Manually annotating dash camera footage proved to be extremely time-consuming and labor-intensive, especially for precise labeling of lane markings, lane types, and traffic violations. This impacted the efficiency of preparing data for model training.
+
+Dataset Availability:
+There was a scarcity of publicly available, high-quality datasets specific to Sri Lankan road conditions. Consequently, significant efforts had to be devoted to collecting and creating custom datasets, which limited the diversity and quantity of available training data.
+
+Dynamic Environmental Conditions:
+Variations in lighting, weather conditions, and complex road infrastructures posed substantial challenges. Models occasionally struggled to maintain high accuracy under these fluctuating real-world conditions, highlighting the difficulty of generalizing models to dynamic scenarios.
+
+Computational Constraints:
+Training and fine-tuning deep learning models require extensive computational resources. Limited access to high-performance GPUs and processing power constrained experimentation frequency and the ability to quickly iterate on models, thus potentially affecting the overall performance optimization.
+
+These limitations suggest areas for future improvement, such as automating the annotation process, enhancing dataset diversity, and acquiring more robust computational resources for extensive model refinement.
 
 \section{Conclusions}
 Deep learning offers a viable solution for traffic violation detection, with potential to scale enforcement efforts. Future work will refine models and expand violation coverage.
