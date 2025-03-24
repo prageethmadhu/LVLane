@@ -127,6 +127,18 @@ As this is a application based reseach we have done lot of customization and dev
 
 \subsection{Applcation Design}
 
+I desined lane violation as in below stratergy
+detect lane separatly.
+detect vehicle seperatly.
+
+add boudry box in vehicle (lower base with adjustable width center to middle)
+
+this is define as lane crossing threshould for vehicle.
+( this adjustable and after some tuneup we come up to this width of the optimal boudr box)
+
+For the helmet violation detection I use sepearate yolo model and call that method seperatly.
+
+
 \subsubsection{Lane detection}
 
 The applicattion succsss is highly deped on the lane detection method we have done intensive liitrure review on the subject
@@ -246,6 +258,17 @@ The outcomes of this study validate the hypothesis that deep learning methods si
 Despite the promising results, the model occasionally struggles in detecting lanes during night-time or poor weather conditions. Inconsistent road markings and varying camera angles in dashcam footage present difficulties in maintaining reliable lane type classification. Moreover, the need for localized datasets increases the challenge of accurate generalization.
 
 LVLane, after fine-tuning, demonstrated the ability to detect both lane markings and lane types with improved accuracy, especially under Sri Lankan road conditions. This aligns with the literature advocating the adoption of advanced CNN-based models for real-time autonomous applications.
+
+If could use many camera footages we can more generalize the trainned model.
+Due to time constrain I am only use one camera.
+
+For data collection stratergy could improve when raining condition.
+Night light conditions
+
+some huristinc can be improve like if near the pedestrial crossing and heavy bend we can ask model to consider that aspects as well to more acuratly guessing lane 
+(near pedestrial crossing and hevey bend most probabaly have solid lanes)
+
+
 
 \subsection{Helmet Violation Detection}
 \subsubsection{Challenges and Limitations}
