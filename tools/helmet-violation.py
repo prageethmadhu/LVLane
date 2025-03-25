@@ -2,9 +2,9 @@ from ultralytics import YOLO
 import cv2
 
 # Load YOLOv12 model
-model = YOLO("yolo11n.pt")  # Downloads a stable version
+model = YOLO("/home/prageeth/proj/LVLane/results/models/yolo11n.pt")  # Downloads a stable version
 # Open video
-cap = cv2.VideoCapture("helmetV.mp4")
+cap = cv2.VideoCapture("/home/prageeth/proj/LVLane/results/videos/cross-validation/evaluation/helmetV.mp4")
 
 while cap.isOpened():
     ret, frame = cap.read()

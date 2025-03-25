@@ -42,7 +42,7 @@ def compute_iou(boxA, boxB):
     return iou
 
 class VideoLaneDetection:
-    def __init__(self, cfg, yolo_model_path='yolov8n.pt', helmet_model_path='/home/prageeth/proj/LVLane/best.pt', violation_threshold=5):
+    def __init__(self, cfg, yolo_model_path='yolov8n.pt', helmet_model_path='results/models/best.pt', violation_threshold=5):
         """Initialize lane detection model, YOLO vehicle detector, helmet detector, and tracker."""
         self.cfg = cfg
         self.processes = Process(cfg.infer_process, cfg)
@@ -370,8 +370,8 @@ if __name__ == '__main__':
     parser.add_argument('config', help='Path to config file')
     parser.add_argument('--video', help='Path to the input video file')
     parser.add_argument('--output', help='Path to save the output video file')
-    parser.add_argument('--load_from', type=str, default='best.pth', help='Path to the pretrained lane model')
-    parser.add_argument('--yolo_model', type=str, default='yolov8n.pt', help='Path to YOLOv8 model')
+    parser.add_argument('--load_from', type=str, default='results/models/best.pt', help='Path to the pretrained lane model')
+    parser.add_argument('--yolo_model', type=str, default='results/models/yolov8n.pt', help='Path to YOLOv8 model')
     parser.add_argument('--violation_threshold', type=int, default=5, help='Threshold for violation count to turn red')
     args = parser.parse_args()
     cfg = Config.fromfile(args.config)
